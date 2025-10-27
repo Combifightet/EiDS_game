@@ -10,6 +10,6 @@ config_version=5
 
 [application]
 
-config/name="EiDS game"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/name="EidS game"
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
