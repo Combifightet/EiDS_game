@@ -23,6 +23,7 @@ An isometric, urban break in simulator, that keeps you on the edge of your seat.
 > Single genre is clearer but often less interesting. Genre combinations can be risky. Beware of ‘tired’ genres.
 
 - isometric
+- point and click
 - stealth / strategy ?
 - procedural (roguelite?)
 
