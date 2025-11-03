@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="EidS game"
-config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
 config/tags=PackedStringArray("ovgu")
+run/main_scene="uid://c8r4kfj1lcsea"
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="uid://cjveh26uqowbg"
