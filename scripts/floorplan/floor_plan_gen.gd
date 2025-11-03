@@ -29,6 +29,8 @@ var _room_grid_resolution: int =  2
 
 var _floorplan_grid: FloorPlanGrid
 
+var _doors_list: Array[Door] = []
+
 const _initial_vertecies: Dictionary[HouseSize, int] = {
 	HouseSize.SMALL:  3,
 	HouseSize.NORMAL: 6,
@@ -242,7 +244,7 @@ func generate_custom(initial_vertecies: int = 6, randomness: float = 0.6, radius
 	print("  growing rooms ...")
 	_floorplan_grid.grow_rooms()
 	print("  placing doors ...")
-	#_generate_doors()
+	_generate_doors()
 	# print("  placing inner doors ...")
 	# print("  placing windows") # optional
 	# print("  placing entrance door")
@@ -276,7 +278,7 @@ func _generate_doors():
 			for dir in directions:
 				var n_x: int = x+dir.x
 				var n_y: int = y+dir.y
-				if (n_x<0 or n_x>=_floorplan_grid.width) or (n_y<0 or n_y>=_floorplan_grid.width):
+				if n_x<0 or n_x>=grid[y].size() or n_y<0 or n_y>=grid.size():
 					continue
 				var n_cell: FloorPlanCell = grid[n_y][n_x]
 				if n_cell.room_id == cell.room_id:
@@ -286,10 +288,80 @@ func _generate_doors():
 	for key in centers_dict.keys():
 		centers_dict[key] /= cell_count_dict[key]
 	
+	var doors_graph: Graph = Graph.new(true)
+	doors_graph.nodes = connectivity_dict.keys()
+	for node in doors_graph.nodes:
+		print(connectivity_dict[node])
+		for conn in connectivity_dict[node]:
+			var dist: float = (centers_dict[conn]-centers_dict[node]).length()
+			if conn==-1 or node==-1:
+				dist = 1_000_000_000
+			doors_graph.edges.append(Graph.Edge.new(node, conn, dist))
 	
-	print("door connectivity:")
-	print(connectivity_dict)
+	var doors_mst_graph: Graph = doors_graph.get_mst()
+	print(doors_mst_graph.to_dot("doors_mst_graph"))
+	#print(connectivity_dict)
+	for edge in doors_mst_graph.edges:
+		_doors_list.append(_select_door(edge.start, edge.end))
+
+func _select_door(id_a: int, id_b: int) -> Door:
+	var grid: Array[Array] = _floorplan_grid.grid
+	var directions: Array[Vector2i] = [
+		Vector2i.LEFT,
+		Vector2i.UP,
+		Vector2i.RIGHT,
+		Vector2i.DOWN,
+	]
 	
+	var possible_doors: Array[Door] = []
+	
+	for y in range(grid.size()):
+		for x in range(grid[y].size()):
+			var cell: FloorPlanCell = grid[y][x]
+			if cell.is_empty():
+				continue
+			if cell.room_id==id_a or cell.room_id==id_b:
+				for dir in directions:
+					var n_x: int = x+dir.x
+					var n_y: int = y+dir.y
+					if n_x<0 or n_x>=grid[y].size() or n_y<0 or n_y>=grid.size():
+						continue
+					var n_cell: FloorPlanCell = grid[n_y][n_x]
+					if n_cell.room_id!=cell.room_id and (n_cell.room_id==id_a or n_cell.room_id==id_b):
+						possible_doors.append(Door.new(
+							Vector2i(x, y),     # cell.room_id,
+							Vector2i(n_x, n_y), # n_cell.room_id,
+							cell.is_outside() or n_cell.is_outside()
+						))
+	
+	return _select_best_door(possible_doors)
+
+
+func _select_best_door(doors: Array[Door]) -> Door:
+	var grid: Array[Array] = _floorplan_grid.grid
+	doors.shuffle()
+	var best_score: float = -1
+	var best_door: Door
+	for door in doors:
+		var ab: Vector2i = door.to-door.from
+		var ba: Vector2i = door.to-door.from
+		var current_score: int = 0
+		if grid[door.from.y][door.from.x].room_id == grid[door.from.y+ab.x][door.from.x-ab.y].room_id:
+			current_score += 1 # from (left)
+		if grid[door.from.y][door.from.x].room_id == grid[door.from.y-ab.x][door.from.x+ab.y].room_id:
+			current_score += 1 # from (right)
+		if grid[door.to.y][door.to.x].room_id == grid[door.to.y+ba.x][door.to.x-ba.y].room_id:
+			current_score += 1 # to (left)
+		if grid[door.to.y][door.to.x].room_id == grid[door.to.y-ba.x][door.to.x+ba.y].room_id:
+			current_score += 1 # to (right)
+		
+		if current_score == 4: # already found an optimal door
+			return door
+		if current_score < best_score:
+			best_score = current_score
+			best_door = door
+	return best_door
+
 
 func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
 	var connectivity_dict: Dictionary[Vector2i, Array] = {}
@@ -321,5 +393,24 @@ func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
 					continue
 				if cell.room_id == grid[n_y][n_x].room_id:
 					connectivity_dict[Vector2i(x,y)].append(Vector2i(n_x, n_y))
+	for door in _doors_list:
+		connectivity_dict[door.from].append(door.to)
+		connectivity_dict[door.to].append(door.from)
 	
 	return connectivity_dict
+
+
+
+class Door extends RefCounted:
+	var from: Vector2i ## outside cell
+	var to: Vector2i   ## inside cell
+	var outside_door: bool = false
+	
+	@warning_ignore("shadowed_variable")
+	func _init(from: Vector2i, to: Vector2i, outside_door: bool = false) -> void:
+		self.from = from
+		self.to = to
+		self.outside_door = outside_door
+	
+	func _to_string() -> String:
+		return str("Door(from: ",from,", to: ",to,")")

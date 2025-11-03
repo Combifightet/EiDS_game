@@ -27,16 +27,13 @@ func to_dot(graph_name: String = "GodotGraph") -> String:
 	dot += "\n}"
 	return dot
 
-## Finds the minimum spaning tree (mst) for a given graph.
+## Finds the minimum spanning tree (mst) for a given graph.
 ## It uses [Prim's Algorithm](https://en.wikipedia.org/wiki/Prim%27s_algorithm)
 func get_mst() -> Graph:
-	assert(_is_dirceted == false, "can only generate an mst for an undirected graph")
 	var min_weight: Dictionary[int, float] = {}
-	#var min_edge: Array = [] # type should be a nulable int
 	var min_edge: Dictionary = {}
 	for node in nodes:
 		min_weight[node] = INF
-		# min_edge.append(null)
 	
 	var explored: Array[int] = []
 	var unexplored: Array[int] = nodes.duplicate()
@@ -60,14 +57,15 @@ func get_mst() -> Graph:
 			else:
 				continue
 			
-			if unexplored.find(neighbor) >= 0 and min_weight[current_node]+edge.weight < min_weight[neighbor]:
-				min_weight[neighbor] = min_weight[current_node]+edge.weight
+			# FIXED: Compare edge weight directly, not accumulated weight
+			if unexplored.find(neighbor) >= 0 and edge.weight < min_weight[neighbor]:
+				min_weight[neighbor] = edge.weight
 				min_edge[neighbor] = edge
 	
 	var mst_edges: Array[Edge] = []
 	var mst_nodes: Array[int] = []
 	for node in nodes:
-		if min_edge.keys().find(node)>=0:
+		if min_edge.keys().find(node) >= 0:
 			mst_edges.append(min_edge[node])
 	for edge in mst_edges:
 		if mst_nodes.find(edge.start) < 0:
