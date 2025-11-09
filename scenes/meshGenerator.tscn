@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d06mw28lni1gd"]
+
+[ext_resource type="Script" uid="uid://j86mp7nbbs3" path="res://scripts/mesh_generator.gd" id="1_vnm0i"]
+
+[node name="MeshGenerator" type="Node3D"]
+script = ExtResource("1_vnm0i")

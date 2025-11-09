@@ -7,6 +7,7 @@ var grid: Array[Array] = [] ## should be of type `Array[Array[FloorPlanCell]]`
 var width: int = 0
 var height: int = 0
 var grid_resolution: int = 1
+var origin: Vector2 = Vector2.ZERO
 
 var _room_dict: Dictionary[Vector2i, RoomArea] = {} ## Stores the initial room position
 var _room_bounds: Dictionary[int, Rect2i] = {} ## Stores the current rectangular bounds of each room
@@ -57,11 +58,11 @@ static func from_points(points: Array[Vector2], resolution: int = 1) -> FloorPla
 	var floor_grid: FloorPlanGrid = FloorPlanGrid.new(floor(grid_size).x, floor(grid_size).y, resolution)
 	
 	# Mark cells inside the polygon as empty, outside as OUTSIDE
-	var origin: Vector2 = snap2(bounds.position, 1.0/resolution) - Vector2.ONE*padding/resolution
+	floor_grid.origin = snap2(bounds.position, 1.0/resolution) - Vector2.ONE*padding/resolution
 	var world_pos: Vector2
 	for y in range(grid_size.y):
 		for x in range(grid_size.x):
-			world_pos = origin + Vector2(x, y)/resolution
+			world_pos = floor_grid.origin + Vector2(x, y)/resolution
 			if not _is_point_in_polygon(world_pos, points):
 				floor_grid.get_cell(x,y).set_outside()
 	
