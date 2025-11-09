@@ -6,9 +6,8 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qhqgy"]
 
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("path_markers_container")]
+[node name="player" type="CharacterBody3D"]
 script = ExtResource("1_3vyb7")
-path_markers_container = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.69, 0, 0, 0, 0.69, 0, 0, 0, 0.69, 0, 0, 0)
