@@ -58,7 +58,7 @@ func setup_pathfinding_graph(grid_data: Dictionary) -> void:
 				
 				astar_graph.connect_points(from_id, to_id, false)
 
-func _process(_delta):
+func _process(delta: float):
 	
 	if Input.is_action_just_pressed("LeftClick"):
 		
@@ -127,6 +127,7 @@ func _process(_delta):
 		current_path = new_path
 		
 		move_to_next_cell()
+
 
 ## Calculates the intersection point of a ray with a horizontal plane
 ## Returns null if the ray is parallel to the plane or pointing away from it
