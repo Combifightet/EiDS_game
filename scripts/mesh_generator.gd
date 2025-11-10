@@ -17,7 +17,10 @@ func generate_floor_mesh(grid: FloorPlanGrid):
 	material.albedo_color = Color.WHITE
 	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-
+	
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color.a = 0.4
+	
 	# Create Visual Mesh
 	var plane_mesh = PlaneMesh.new()
 	

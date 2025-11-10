@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=7 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/main.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://d06mw28lni1gd" path="res://scenes/meshGenerator.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://d06mw28lni1gd" path="res://scenes/mesh_generator.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="3_sugp2"]
+[ext_resource type="Shader" uid="uid://bmgcai44pktxg" path="res://shaders/grid.gdshader" id="4_jyhfs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tbgi4"]
+render_priority = 0
+shader = ExtResource("4_jyhfs")
+shader_parameter/color_a = Color(0.21, 0.24, 0.29, 1)
+shader_parameter/color_b = Color(0.11, 0.13, 0.16, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tefeu"]
+material = SubResource("ShaderMaterial_tbgi4")
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("player_node", "mesh_generator")]
 script = ExtResource("1_o5qli")
@@ -10,7 +20,6 @@ player_node = NodePath("player")
 mesh_generator = NodePath("MeshGenerator")
 
 [node name="player" parent="." node_paths=PackedStringArray("path_markers_container") instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40352285, 1.0806355, -0.25501323)
 path_markers_container = NodePath("../Pathmarkers")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -19,7 +28,13 @@ transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.707
 [node name="MeshGenerator" parent="." instance=ExtResource("2_0wfyh")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.371139e-08, -0.9659258, 0.25881907, 0, 0.25881907, 0.9659258, -1, 4.222196e-08, -1.1313341e-08, 2.3276625, 9.081, 0)
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 2.5, 5, 2.5)
+projection = 1
+size = 10.0
 
 [node name="Pathmarkers" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.001, 0)
+mesh = SubResource("PlaneMesh_tefeu")
