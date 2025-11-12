@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://qbbyymb77toc"
+path="res://.godot/imported/tile_1-11.obj-e4ed6790badbb9889b4a611f78f88bbc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_1-11.obj-e4ed6790badbb9889b4a611f78f88bbc.mesh"]
+
+source_file="res://assets/tiles/tile_1-11.obj"
+dest_files=["res://.godot/imported/tile_1-11.obj-e4ed6790badbb9889b4a611f78f88bbc.mesh", "res://.godot/imported/tile_1-11.obj-e4ed6790badbb9889b4a611f78f88bbc.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,291 @@
+[gd_scene load_steps=49 format=3 uid="uid://yrmhyupjk725"]
+
+[ext_resource type="ArrayMesh" uid="uid://b0lmmot8whxgh" path="res://assets/tiles/tile_1-1.obj" id="1_k5xwo"]
+[ext_resource type="ArrayMesh" uid="uid://btka13x6de0ls" path="res://assets/tiles/tile_1-2.obj" id="2_tye7d"]
+[ext_resource type="ArrayMesh" uid="uid://b340uyc328dh5" path="res://assets/tiles/tile_1-3.obj" id="3_4xjeu"]
+[ext_resource type="ArrayMesh" uid="uid://bc0y7n6wloym0" path="res://assets/tiles/tile_1-4.obj" id="4_kdeqk"]
+[ext_resource type="ArrayMesh" uid="uid://qht1kf8lkjel" path="res://assets/tiles/tile_1-5.obj" id="5_v8hlr"]
+[ext_resource type="ArrayMesh" uid="uid://b7ya8t45ca3k4" path="res://assets/tiles/tile_1-6.obj" id="6_guy5x"]
+[ext_resource type="ArrayMesh" uid="uid://dqa6g3llhstpy" path="res://assets/tiles/tile_1-7.obj" id="7_2e065"]
+[ext_resource type="ArrayMesh" uid="uid://cgatkpinr6pau" path="res://assets/tiles/tile_1-8.obj" id="8_6m54x"]
+[ext_resource type="ArrayMesh" uid="uid://db6c8u63o5gk2" path="res://assets/tiles/tile_1-9.obj" id="9_4ixjr"]
+[ext_resource type="ArrayMesh" uid="uid://bpc3rqqwodrkp" path="res://assets/tiles/tile_1-10.obj" id="10_38xbh"]
+[ext_resource type="ArrayMesh" uid="uid://qbbyymb77toc" path="res://assets/tiles/tile_1-11.obj" id="11_s3t8n"]
+[ext_resource type="ArrayMesh" uid="uid://d2m60h0vcfqea" path="res://assets/tiles/tile_1-12.obj" id="12_qvf5i"]
+[ext_resource type="ArrayMesh" uid="uid://jquvfifr7otj" path="res://assets/tiles/tile_2-1.obj" id="13_idqte"]
+[ext_resource type="ArrayMesh" uid="uid://b1hgcpmrg241f" path="res://assets/tiles/tile_2-2.obj" id="14_lj435"]
+[ext_resource type="ArrayMesh" uid="uid://cgfp2c4aq15bn" path="res://assets/tiles/tile_2-3.obj" id="15_lpisj"]
+[ext_resource type="ArrayMesh" uid="uid://cw663d4qqfxn6" path="res://assets/tiles/tile_2-4.obj" id="16_6ojqw"]
+[ext_resource type="ArrayMesh" uid="uid://b47yjpr2niyu4" path="res://assets/tiles/tile_2-5.obj" id="17_6q2lr"]
+[ext_resource type="ArrayMesh" uid="uid://c665glhegn231" path="res://assets/tiles/tile_2-6.obj" id="18_l7the"]
+[ext_resource type="ArrayMesh" uid="uid://bvblq3uicwcip" path="res://assets/tiles/tile_2-7.obj" id="19_dbsjl"]
+[ext_resource type="ArrayMesh" uid="uid://dmerl4rvj62rg" path="res://assets/tiles/tile_2-8.obj" id="20_jp5cc"]
+[ext_resource type="ArrayMesh" uid="uid://oic6knysoyy5" path="res://assets/tiles/tile_2-9.obj" id="21_vjspd"]
+[ext_resource type="ArrayMesh" uid="uid://dhcxb4heexknc" path="res://assets/tiles/tile_2-10.obj" id="22_8mi8o"]
+[ext_resource type="ArrayMesh" uid="uid://dy5t1i7p7im8n" path="res://assets/tiles/tile_2-11.obj" id="23_2c812"]
+[ext_resource type="ArrayMesh" uid="uid://5ewgnk7cmhwm" path="res://assets/tiles/tile_2-12.obj" id="24_n5n1d"]
+[ext_resource type="ArrayMesh" uid="uid://df00cgrq554ha" path="res://assets/tiles/tile_3-1.obj" id="25_5mdbt"]
+[ext_resource type="ArrayMesh" uid="uid://h7b4trygvuab" path="res://assets/tiles/tile_3-2.obj" id="26_opfpp"]
+[ext_resource type="ArrayMesh" uid="uid://l57wn3lh880g" path="res://assets/tiles/tile_3-3.obj" id="27_rapyp"]
+[ext_resource type="ArrayMesh" uid="uid://bvc5g2idv3c6q" path="res://assets/tiles/tile_3-4.obj" id="28_5ovel"]
+[ext_resource type="ArrayMesh" uid="uid://dk0cjdinchwox" path="res://assets/tiles/tile_3-5.obj" id="29_oqaqk"]
+[ext_resource type="ArrayMesh" uid="uid://c723dycogmwu0" path="res://assets/tiles/tile_3-6.obj" id="30_242oi"]
+[ext_resource type="ArrayMesh" uid="uid://ckg1bji417d87" path="res://assets/tiles/tile_3-7.obj" id="31_ywrxv"]
+[ext_resource type="ArrayMesh" uid="uid://ynmnvuqydjj2" path="res://assets/tiles/tile_3-8.obj" id="32_jo4u1"]
+[ext_resource type="ArrayMesh" uid="uid://dr2jpowuoptlh" path="res://assets/tiles/tile_3-9.obj" id="33_h6xhm"]
+[ext_resource type="ArrayMesh" uid="uid://crg68824plquj" path="res://assets/tiles/tile_3-10.obj" id="34_f3ojs"]
+[ext_resource type="ArrayMesh" uid="uid://f0yvmteyufci" path="res://assets/tiles/tile_3-11.obj" id="35_17jqe"]
+[ext_resource type="ArrayMesh" uid="uid://2erp5afhio3v" path="res://assets/tiles/tile_3-12.obj" id="36_47238"]
+[ext_resource type="ArrayMesh" uid="uid://ccqy7hmxfpuce" path="res://assets/tiles/tile_4-1.obj" id="37_oqaqk"]
+[ext_resource type="ArrayMesh" uid="uid://di4rm73jvp1q7" path="res://assets/tiles/tile_4-2.obj" id="38_242oi"]
+[ext_resource type="ArrayMesh" uid="uid://enoyjwe67ufc" path="res://assets/tiles/tile_4-3.obj" id="39_ywrxv"]
+[ext_resource type="ArrayMesh" uid="uid://bokgjs7jyiccl" path="res://assets/tiles/tile_4-4.obj" id="40_jo4u1"]
+[ext_resource type="ArrayMesh" uid="uid://bcifq1tt5c5ct" path="res://assets/tiles/tile_4-5.obj" id="41_kjpvq"]
+[ext_resource type="ArrayMesh" uid="uid://cvd0rd022w7ea" path="res://assets/tiles/tile_4-6.obj" id="42_uqf5r"]
+[ext_resource type="ArrayMesh" uid="uid://bobefrjgmu1ej" path="res://assets/tiles/tile_4-7.obj" id="43_yk7qn"]
+[ext_resource type="ArrayMesh" uid="uid://bsb4v2mpmbh3p" path="res://assets/tiles/tile_4-8.obj" id="44_4jbum"]
+[ext_resource type="ArrayMesh" uid="uid://ctvnji6pbo0b6" path="res://assets/tiles/tile_4-9.obj" id="45_5nr65"]
+[ext_resource type="ArrayMesh" uid="uid://dwwqklc0oqdw4" path="res://assets/tiles/tile_4-10.obj" id="46_v1ml5"]
+[ext_resource type="ArrayMesh" uid="uid://cnd4b5n604smo" path="res://assets/tiles/tile_4-11.obj" id="47_xh7bu"]
+[ext_resource type="ArrayMesh" uid="uid://b4cbp3sn7opg7" path="res://assets/tiles/tile_4-12.obj" id="48_snii6"]
+
+[node name="MeshLibrary" type="Node3D"]
+
+[node name="Tile 1-1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -1.5)
+mesh = ExtResource("1_k5xwo")
+
+[node name="Tile 1-2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -1.5)
+mesh = ExtResource("2_tye7d")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 1-3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -1.5)
+mesh = ExtResource("3_4xjeu")
+skeleton = NodePath("../Tile 1-2")
+
+[node name="Tile 1-4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -1.5)
+mesh = ExtResource("4_kdeqk")
+skeleton = NodePath(".")
+
+[node name="Tile 1-5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -1.5)
+mesh = ExtResource("5_v8hlr")
+skeleton = NodePath("../Tile 1-4")
+
+[node name="Tile 1-6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -1.5)
+mesh = ExtResource("6_guy5x")
+skeleton = NodePath(".")
+
+[node name="Tile 1-7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -1.5)
+mesh = ExtResource("7_2e065")
+skeleton = NodePath(".")
+
+[node name="Tile 1-8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -1.5)
+mesh = ExtResource("8_6m54x")
+skeleton = NodePath(".")
+
+[node name="Tile 1-9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -1.5)
+mesh = ExtResource("9_4ixjr")
+skeleton = NodePath("../Tile 1-4")
+
+[node name="Tile 1-10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -1.5)
+mesh = ExtResource("10_38xbh")
+skeleton = NodePath("../Tile 1-5")
+
+[node name="Tile 1-11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -1.5)
+mesh = ExtResource("11_s3t8n")
+skeleton = NodePath("../Tile 1-5")
+
+[node name="Tile 1-12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -1.5)
+mesh = ExtResource("12_qvf5i")
+skeleton = NodePath(".")
+
+[node name="Tile 2-1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -0.5)
+mesh = ExtResource("13_idqte")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -0.5)
+mesh = ExtResource("14_lj435")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -0.5)
+mesh = ExtResource("15_lpisj")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -0.5)
+mesh = ExtResource("16_6ojqw")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -0.5)
+mesh = ExtResource("17_6q2lr")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+mesh = ExtResource("18_l7the")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+mesh = ExtResource("19_dbsjl")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -0.5)
+mesh = ExtResource("20_jp5cc")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -0.5)
+mesh = ExtResource("21_vjspd")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -0.5)
+mesh = ExtResource("22_8mi8o")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -0.5)
+mesh = ExtResource("23_2c812")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 2-12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -0.5)
+mesh = ExtResource("24_n5n1d")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 0.5)
+mesh = ExtResource("25_5mdbt")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 0.5)
+mesh = ExtResource("26_opfpp")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 0.5)
+mesh = ExtResource("27_rapyp")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0.5)
+mesh = ExtResource("28_5ovel")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0.5)
+mesh = ExtResource("29_oqaqk")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+mesh = ExtResource("30_242oi")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+mesh = ExtResource("31_ywrxv")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
+mesh = ExtResource("32_jo4u1")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0.5)
+mesh = ExtResource("33_h6xhm")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0.5)
+mesh = ExtResource("34_f3ojs")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0.5)
+mesh = ExtResource("35_17jqe")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 3-12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 0.5)
+mesh = ExtResource("36_47238")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 1.5)
+mesh = ExtResource("37_oqaqk")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 1.5)
+mesh = ExtResource("38_242oi")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 1.5)
+mesh = ExtResource("39_ywrxv")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 1.5)
+mesh = ExtResource("40_jo4u1")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 1.5)
+mesh = ExtResource("41_kjpvq")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
+mesh = ExtResource("42_uqf5r")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
+mesh = ExtResource("43_yk7qn")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1.5)
+mesh = ExtResource("44_4jbum")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 1.5)
+mesh = ExtResource("45_5nr65")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 1.5)
+mesh = ExtResource("46_v1ml5")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 1.5)
+mesh = ExtResource("47_xh7bu")
+skeleton = NodePath("../Tile 1-1")
+
+[node name="Tile 4-12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 1.5)
+mesh = ExtResource("48_snii6")
+skeleton = NodePath("../Tile 1-1")
