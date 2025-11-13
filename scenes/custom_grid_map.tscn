@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://croe4wv0qitug"]
+
+[ext_resource type="MeshLibrary" uid="uid://54yv12u6qp5m" path="res://assets/mesh_library.tres" id="1_brbuq"]
+[ext_resource type="Script" uid="uid://dv2054p8kbx0" path="res://scenes/grid_map.gd" id="2_e0hb1"]
+
+[node name="CustomGridMap" type="GridMap"]
+mesh_library = ExtResource("1_brbuq")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+script = ExtResource("2_e0hb1")

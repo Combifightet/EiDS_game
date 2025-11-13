@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj7yevnfwxhg8"]
+
+[ext_resource type="PackedScene" uid="uid://croe4wv0qitug" path="res://scenes/custom_grid_map.tscn" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://cl6iayl5jljxv" path="res://scripts/level.gd" id="1_w7c3h"]
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_w7c3h")
+
+[node name="CustomGridMap" parent="." instance=ExtResource("1_2q6dc")]
