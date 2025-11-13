@@ -22,7 +22,7 @@ func _cell_equals(a: FloorPlanCell, b: FloorPlanCell) -> bool:
 		a.room_id != b.room_id
 	)
 
-func from_grid(floor_plan_grid: FloorPlanGrid) -> void:
+func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = []) -> void:
 	custom_grid_map.clear()
 	
 	for y in range(floor_plan_grid.height):
@@ -37,6 +37,23 @@ func from_grid(floor_plan_grid: FloorPlanGrid) -> void:
 			]
 			if cell != null:
 				neighbours[4] = true
+				
+				for door in doors:
+					if door.from == Vector2i(x,y) or door.to == Vector2i(x,y):
+						var dir: Vector2i
+						if door.from == Vector2i(x,y):
+							dir = door.to-door.from
+						else:
+							dir = door.from-door.to
+						if dir == Vector2i( 0, -1):
+							neighbours[1] = true # top
+						elif dir == Vector2i(-1, 0):
+							neighbours[3] = true # left
+						elif dir == Vector2i( 1, 0):
+							neighbours[5] = true # right
+						elif dir == Vector2i( 0, 1):
+							neighbours[7] = true # bottom
+							
 				
 				if _cell_equals(cell, floor_plan_grid.get_cell(x, y-1)):
 					neighbours[1] = true # top
