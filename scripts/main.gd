@@ -64,6 +64,9 @@ func _ready() -> void:
 	print("\n\nconnectivity:")
 	print(dict_connections_to_grid_string(connectivity))
 	
+	var level_gen: LevelGen = $Level
+	level_gen.from_grid(grid)
+
 
 
 func dict_connections_to_grid_string(connections: Dictionary) -> String:

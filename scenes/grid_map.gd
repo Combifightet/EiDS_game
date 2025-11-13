@@ -1,6 +1,9 @@
 extends GridMap
 class_name CustomGridMap
 
+# 240 = 16 + 
+# 0b001_111_000
+
 # bitmask (0b000010000):
 #  1   2   4
 #  8  16  32

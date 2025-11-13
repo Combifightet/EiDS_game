@@ -29,6 +29,7 @@ path_markers_container = NodePath("../Pathmarkers")
 transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 12.931057, 0)
 
 [node name="MeshGenerator" parent="." instance=ExtResource("2_0wfyh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.024570227, 0)
 
 [node name="Pathmarkers" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -45,6 +46,6 @@ script = ExtResource("5_tbgi4")
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 2.5, 5, 2.5)
 doppler_tracking = 2
 projection = 1
-size = 10.0
+size = 5.0
 
 [node name="Level" parent="." instance=ExtResource("6_tefeu")]
