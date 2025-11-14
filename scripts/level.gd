@@ -162,6 +162,7 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 			@warning_ignore("integer_division")
 			custom_grid_map.set_cell_item(
 				# TODO: this offset is not correct
-				Vector3i(x-floor_plan_grid.width/2, 0, y-floor_plan_grid.height/2),
+				#Vector3i(x-floor_plan_grid.width/2, 0, y-floor_plan_grid.height/2),
+				Vector3i(x, 0, y),
 				custom_grid_map.tiles[peering_bits]
 			)

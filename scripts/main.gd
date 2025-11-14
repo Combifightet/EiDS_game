@@ -65,6 +65,7 @@ func _ready() -> void:
 	print(dict_connections_to_grid_string(connectivity))
 	
 	var level_gen: LevelGen = $Level
+	level_gen.position = Vector3(grid.origin.x, 0, grid.origin.y)
 	level_gen.from_grid(grid, floorplan_gen._doors_list)
 
 

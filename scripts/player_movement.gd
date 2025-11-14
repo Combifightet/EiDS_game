@@ -58,7 +58,7 @@ func setup_pathfinding_graph(grid_data: Dictionary) -> void:
 				
 				astar_graph.connect_points(from_id, to_id, false)
 
-func _process(delta: float):
+func _process(_delta: float):
 	
 	if Input.is_action_just_pressed("LeftClick"):
 		

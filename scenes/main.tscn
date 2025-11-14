@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=10 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://d06mw28lni1gd" path="res://scenes/mesh_generator.tscn" id="2_0wfyh"]
@@ -6,6 +6,11 @@
 [ext_resource type="Shader" uid="uid://bmgcai44pktxg" path="res://shaders/grid.gdshader" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_tefeu"]
+
+[sub_resource type="Environment" id="Environment_tefeu"]
+background_color = Color(0.17254902, 0.1882353, 0.21176471, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tbgi4"]
 render_priority = 0
@@ -26,16 +31,21 @@ unique_name_in_owner = true
 path_markers_container = NodePath("../Pathmarkers")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 12.931057, 0)
+transform = Transform3D(0.9238795, 0.27059808, -0.27059808, 0, 0.7071068, 0.7071068, 0.38268346, -0.6532815, 0.6532815, 0, 5, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tefeu")
 
 [node name="MeshGenerator" parent="." instance=ExtResource("2_0wfyh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.024570227, 0)
+visible = false
 
 [node name="Pathmarkers" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.001, 0)
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -0.001, 0)
 mesh = SubResource("PlaneMesh_tefeu")
 
 [node name="CameraMount" type="Node3D" parent="."]
@@ -46,6 +56,6 @@ script = ExtResource("5_tbgi4")
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 2.5, 5, 2.5)
 doppler_tracking = 2
 projection = 1
-size = 5.0
+size = 10.0
 
 [node name="Level" parent="." instance=ExtResource("6_tefeu")]

@@ -14,7 +14,7 @@ void fragment() {
 		floor(world_position)
 	);
 	
-	if ((stripes.x+stripes.y+stripes.z)%2 > 0) {
+	if ((stripes.x+stripes.z+100000)%2 > 0) {
 		ALBEDO = color_a;
 	} else {
 		ALBEDO = color_b;
