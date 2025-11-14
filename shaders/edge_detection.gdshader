@@ -95,7 +95,6 @@ void fragment() {
 
 	ALBEDO += innerLines*lineHighlight;
 	ALBEDO -= ALBEDO*depthDiff*lineShadow;
-
 }
 
 void light() {
