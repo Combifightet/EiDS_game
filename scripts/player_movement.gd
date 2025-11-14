@@ -88,7 +88,7 @@ func _process(_delta: float):
 		
 		# Make sure cells are valid before pathfinding
 		if not cell_to_id.has(start_cell) or not cell_to_id.has(end_cell):
-			print("Clicked on an invalid or unmapped cell.")
+			print("Clicked on an invalid or unmapped cell (", click_position, ").")
 			return
 		
 		# Get the integer IDs for AStar

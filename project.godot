@@ -14,7 +14,14 @@ config/name="EidS game"
 config/tags=PackedStringArray("ovgu")
 run/main_scene="uid://c8r4kfj1lcsea"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(0.15686275, 0.17254902, 0.19215687, 1)
 config/icon="uid://cjveh26uqowbg"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="viewport"
 
 [input]
 
@@ -36,4 +43,6 @@ rotate_camera_right={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
+textures/decals/filter=2
 environment/defaults/default_clear_color=Color(0.15686275, 0.17254902, 0.19215687, 1)

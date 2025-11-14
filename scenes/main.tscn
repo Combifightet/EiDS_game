@@ -23,40 +23,57 @@ material = SubResource("ShaderMaterial_tbgi4")
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("player_node", "mesh_generator")]
 script = ExtResource("1_o5qli")
-player_node = NodePath("Player")
-mesh_generator = NodePath("MeshGenerator")
+player_node = NodePath("PixelViewportContainer/PixelViewport/Player")
+mesh_generator = NodePath("PixelViewportContainer/PixelViewport/MeshGenerator")
 
-[node name="Player" parent="." node_paths=PackedStringArray("path_markers_container") instance=ExtResource("3_sugp2")]
+[node name="PixelViewportContainer" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+
+[node name="PixelViewport" type="SubViewport" parent="PixelViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="Player" parent="PixelViewportContainer/PixelViewport" node_paths=PackedStringArray("path_markers_container") instance=ExtResource("3_sugp2")]
 unique_name_in_owner = true
 path_markers_container = NodePath("../Pathmarkers")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(0.9238795, 0.27059808, -0.27059808, 0, 0.7071068, 0.7071068, 0.38268346, -0.6532815, 0.6532815, 0, 5, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="PixelViewportContainer/PixelViewport"]
 environment = SubResource("Environment_tefeu")
 
-[node name="MeshGenerator" parent="." instance=ExtResource("2_0wfyh")]
+[node name="MeshGenerator" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("2_0wfyh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.024570227, 0)
 visible = false
 
-[node name="Pathmarkers" type="Node3D" parent="."]
+[node name="Pathmarkers" type="Node3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -0.001, 0)
 mesh = SubResource("PlaneMesh_tefeu")
+skeleton = NodePath("../../..")
 
-[node name="CameraMount" type="Node3D" parent="."]
+[node name="CameraMount" type="Node3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
 script = ExtResource("5_tbgi4")
 
-[node name="Camera3D" type="Camera3D" parent="CameraMount"]
-transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 2.5, 5, 2.5)
+[node name="Camera3D" type="Camera3D" parent="PixelViewportContainer/PixelViewport/CameraMount"]
+transform = Transform3D(0.7071067, -0.35355335, 0.61237234, 0, 0.8660253, 0.49999997, -0.7071067, -0.35355335, 0.61237234, 10, 10, 10)
 doppler_tracking = 2
 projection = 1
 size = 10.0
 far = 100.0
 
-[node name="Level" parent="." instance=ExtResource("6_tefeu")]
+[node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_tefeu")]
