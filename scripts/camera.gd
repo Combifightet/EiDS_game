@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 	if camera.global_rotation != _prev_rotation:
 		_prev_rotation = camera.global_rotation
 		_snap_space = camera.global_transform
-	var texel_size: float = camera.size/180.0
+	var texel_size: float = camera.size/(camera.get_viewport().size.y)
 	# camera position in snap space
 	var snap_space_pos: Vector3 = camera.global_position * _snap_space
 	# snap!
