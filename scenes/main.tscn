@@ -57,5 +57,6 @@ transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70
 doppler_tracking = 2
 projection = 1
 size = 10.0
+far = 100.0
 
 [node name="Level" parent="." instance=ExtResource("6_tefeu")]
