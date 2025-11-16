@@ -2,6 +2,11 @@ extends CharacterBody3D
 
 class_name PlayerMovement
 
+const SAVE_FILE_PATH = "user://character_data.json"
+
+@export var collision_shape: CollisionShape3D
+@export var mesh: MeshInstance3D
+
 ## How fast the player moves from one cell to the next (in seconds)
 @export var move_duration: float = 0.2
 
@@ -26,6 +31,69 @@ var active_tween: Tween
 @export var path_markers_container: Node3D
 
 var debug_sphere = SphereMesh.new()
+
+var _player_material: StandardMaterial3D
+
+func _ready() -> void:
+	# 1. Create a material for the player mesh
+	_player_material = StandardMaterial3D.new()
+	if mesh:
+		mesh.set_surface_override_material(0, _player_material)
+	else:
+		push_error("Player: 'MeshInstance3D' node not found. Check path.")
+
+	# 2. Load the saved appearance data
+	_load_character_data()
+
+func _load_character_data() -> void:
+	# 1. Check if the save file exists
+	if not FileAccess.file_exists(SAVE_FILE_PATH):
+		print("Player: No save file found. Using default appearance.")
+		return
+		
+	# 2. Open and read the file content
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	if not file:
+		push_error("Player: Could not open save file to read.")
+		return
+		
+	var file_content = file.get_as_text()
+	file.close()
+	
+	# 3. Parse the JSON text
+	var json = JSON.new()
+	var error = json.parse(file_content)
+	
+	if error != OK:
+		push_error("Player: Error parsing save file: %s" % json.get_error_message())
+		return
+
+	# 4. Apply the loaded data
+	var loaded_data = json.data
+	if loaded_data is Dictionary:
+		# Get saved values, using defaults if a key is missing
+		var new_height = loaded_data.get("height", 2.0)
+		var new_radius = loaded_data.get("radius", 0.5)
+		var new_color = Color(loaded_data.get("color", "#ffffff"))
+		
+		# Apply to the mesh resource
+		if mesh and mesh.mesh is CapsuleMesh:
+			mesh.mesh.height = new_height
+			mesh.mesh.radius = new_radius
+		
+		# Apply to the collision shape resource
+		if collision_shape and collision_shape.shape is CapsuleShape3D:
+			# IMPORTANT: CapsuleShape height is *only* the cylinder part,
+			# but the mesh height is the *total* height. We must convert.
+			collision_shape.shape.height = new_height - (2.0 * new_radius)
+			collision_shape.shape.radius = new_radius
+			
+		# Apply to the material
+		if _player_material:
+			_player_material.albedo_color = new_color
+			
+	else:
+		push_error("Player: Save file content was not a valid Dictionary.")
 
 func setup_grid_transform(origin: Vector2, resolution: float) -> void:
 	_grid_origin = Vector3(origin.x, global_position.y, origin.y)

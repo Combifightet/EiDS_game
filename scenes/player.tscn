@@ -8,8 +8,10 @@ radius = 0.25
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qhqgy"]
 radius = 0.25
 
-[node name="player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("collision_shape", "mesh")]
 script = ExtResource("1_3vyb7")
+collision_shape = NodePath("CollisionShape3D")
+mesh = NodePath("CollisionShape3D/MeshInstance3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.7, 0)
