@@ -12,7 +12,7 @@ config_version=5
 
 config/name="EidS game"
 config/tags=PackedStringArray("ovgu")
-run/main_scene="uid://c8r4kfj1lcsea"
+run/main_scene="uid://34txyxthjka1"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0.15686275, 0.17254902, 0.19215687, 1)
 config/icon="uid://cjveh26uqowbg"
