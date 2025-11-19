@@ -4,7 +4,6 @@ var floorplan_gen: FloorPlanGen
 
 # --- References to your 3D nodes ---
 @export var player_node: PlayerMovement
-@export var mesh_generator: MeshGenerator
 
 
 func _ready() -> void:
@@ -18,13 +17,7 @@ func _ready() -> void:
 
 	print("displaying grid ...")
 	var grid: FloorPlanGrid = floorplan_gen.get_grid()
-	
-	# --- Generate the 3D floor mesh ---
-	if not mesh_generator:
-		printerr("MeshGenerator node not assigned in main.gd!")
-	else:
-		mesh_generator.generate_floor_mesh(grid)
-	
+		
 	# --- Setup the Player ---
 	var connectivity: Dictionary[Vector2i, Array] = floorplan_gen.to_connectivity_dict()
 	

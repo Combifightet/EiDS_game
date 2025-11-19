@@ -298,11 +298,39 @@ func _generate_doors():
 				dist = 1_000_000_000
 			doors_graph.edges.append(Graph.Edge.new(node, conn, dist))
 	
+	# ensure that each room is reachable
 	var doors_mst_graph: Graph = doors_graph.get_mst()
 	print(doors_mst_graph.to_dot("doors_mst_graph"))
-	#print(connectivity_dict)
 	for edge in doors_mst_graph.edges:
-		_doors_list.append(_select_door(edge.start, edge.end))
+		var selected_door: Door = _select_door(edge.start, edge.end)
+		if selected_door!=null:
+			_doors_list.append(selected_door)
+	
+	# remove duplicate edges
+	var i: int = 0
+	while i<len(doors_graph.edges):
+		var index: int = doors_graph.edges.rfind_custom(func(edge: Graph.Edge): return edge.start==doors_graph.edges[i].end and edge.end==doors_graph.edges[i].start)
+		if index > i:
+			doors_graph.edges.remove_at(index)
+		i += 1
+	
+	# add some more random connections
+	for _i in range(roundi(len(doors_mst_graph.edges)*2)):
+		doors_graph.edges.remove_at(randi()%len(doors_graph.edges))
+	
+	
+	for edge in doors_graph.edges:
+		if edge.start==FloorPlanCell.OUTSIDE or edge.end==FloorPlanCell.OUTSIDE:
+			continue
+		if edge.start==FloorPlanCell.NO_ROOM or edge.end==FloorPlanCell.NO_ROOM:
+			continue
+		if _doors_list.any(func(door): return (door.from_id==edge.start and door.to_id==edge.end) or (door.from_id==edge.end and door.to_id==edge.start)):
+			continue
+		var selected_door: Door = _select_door(edge.start, edge.end)
+		if selected_door!=null:
+			_doors_list.append(selected_door)
+			print("added an extra door")
+
 
 func _select_door(id_a: int, id_b: int) -> Door:
 	var grid: Array[Array] = _floorplan_grid.grid
@@ -331,6 +359,8 @@ func _select_door(id_a: int, id_b: int) -> Door:
 						possible_doors.append(Door.new(
 							Vector2i(x, y),     # cell.room_id,
 							Vector2i(n_x, n_y), # n_cell.room_id,
+							id_a,
+							id_b,
 							cell.is_outside() or n_cell.is_outside()
 						))
 	
@@ -404,13 +434,17 @@ func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
 class Door extends RefCounted:
 	var from: Vector2i ## outside cell
 	var to: Vector2i   ## inside cell
+	var from_id: int
+	var to_id: int
 	var outside_door: bool = false
 	
 	@warning_ignore("shadowed_variable")
-	func _init(from: Vector2i, to: Vector2i, outside_door: bool = false) -> void:
+	func _init(from: Vector2i, to: Vector2i, from_id: int, to_id: int, outside_door: bool = false) -> void:
 		self.from = from
 		self.to = to
+		self.from_id = from_id
+		self.to_id = to_id
 		self.outside_door = outside_door
 	
 	func _to_string() -> String:
-		return str("Door(from: ",from,", to: ",to,")")
+		return str("Door(from: ",from,"[", from_id ,"], to: ",to,"[", to_id ,"])")
