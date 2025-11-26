@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=16 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="3_sugp2"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="5_tbgi4"]
 [ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_tefeu"]
-[ext_resource type="PackedScene" uid="uid://dowgpjp8sv203" path="res://scenes/collectible.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="8_tipki"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6xl0"]
@@ -98,9 +97,6 @@ far = 100.0
 mesh = SubResource("QuadMesh_tefeu")
 
 [node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_tefeu")]
-
-[node name="Collectible" parent="PixelViewportContainer/PixelViewport/Level" instance=ExtResource("7_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
 [node name="GameUi" type="Control" parent="."]
 layout_mode = 3

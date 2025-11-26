@@ -94,3 +94,27 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 
 			custom_grid_map.scale = Vector3(1/grid_size, wall_height, 1/grid_size)
 			custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)
+	
+	place_rooms(floor_plan_grid, subdivisions)
+
+func place_rooms(floor_plan_grid: FloorPlanGrid, subdivisions: int = 0) -> void:
+	var rooms: Dictionary[Vector2i, RoomArea] = floor_plan_grid._room_dict
+	
+	var graph: Graph = Graph.new(true)
+	for room in rooms.keys():
+		graph.nodes.append(rooms[room].id)
+		for room_2 in rooms.keys():
+			if rooms[room].id == rooms[room_2].id:
+				continue
+				
+			var dist: float = (room-room_2).length()
+			if rooms[room].id==-1 or rooms[room_2].id==-1:
+				dist = 1_000_000_000
+			graph.edges.append(Graph.Edge.new(rooms[room].id, rooms[room_2].id, dist))
+	
+	# ensure that each room is reachable
+	var mst_graph: Graph = graph.get_mst()
+	
+	for edge in mst_graph.edges:
+		#TODO: sort rooms by distance from room with id == -1
+		pass
