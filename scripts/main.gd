@@ -5,6 +5,8 @@ var floorplan_gen: FloorPlanGen
 # --- References to your 3D nodes ---
 @export var player_node: PlayerMovement
 
+const GRID_SUBDIVISIONS: int = 1
+
 
 func _ready() -> void:
 	
@@ -12,14 +14,15 @@ func _ready() -> void:
 	#floorplan_gen.set_seed(7)
 	randomize()
 	floorplan_gen.set_seed(randi())
-	floorplan_gen.generate(FloorPlanGen.HouseSize.NORMAL)
+	floorplan_gen.generate(FloorPlanGen.HouseSize.SMALL)
 	print("last_seed: ", floorplan_gen.get_last_seed())
 
 	print("displaying grid ...")
 	var grid: FloorPlanGrid = floorplan_gen.get_grid()
 		
 	# --- Setup the Player ---
-	var connectivity: Dictionary[Vector2i, Array] = floorplan_gen.to_connectivity_dict()
+	var connectivity_og: Dictionary[Vector2i, Array] = floorplan_gen.to_connectivity_dict()
+	var connectivity: Dictionary[Vector2i, Array] = floorplan_gen.to_connectivity_dict(GRID_SUBDIVISIONS)
 	
 	if not player_node:
 		printerr("Player node not assigned in main.gd!")
@@ -56,10 +59,12 @@ func _ready() -> void:
 	
 	print("\n\nconnectivity:")
 	print(dict_connections_to_grid_string(connectivity))
+	print("\n\nconnectivity (original):")
+	print(dict_connections_to_grid_string(connectivity_og))
 	
 	var level_gen: LevelGen = %PixelViewport/Level
 	level_gen.position = Vector3(grid.origin.x, 0, grid.origin.y)
-	level_gen.from_grid(grid, floorplan_gen._doors_list)
+	level_gen.from_grid(grid, floorplan_gen._doors_list, GRID_SUBDIVISIONS)
 
 
 

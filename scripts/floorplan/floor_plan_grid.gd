@@ -85,6 +85,11 @@ func get_cell(x: int, y: int) -> FloorPlanCell:
 		return null
 	return grid[y][x]
 
+func set_cell(x: int, y: int, cell: FloorPlanCell) -> void:
+	if x < 0 or x >= width or y < 0 or y >= height:
+		return
+	grid[y][x] = cell
+
 
 ## Check if a point is inside a polygon using ray casting algorithm
 static func _is_point_in_polygon(point: Vector2, polygon: Array[Vector2]) -> bool:
@@ -143,7 +148,6 @@ func place_rooms(rooms: Array[RoomArea]) -> void:
 	var dist_grid: Array[Array] = _get_outside_dists() # should be Array[Array[int]]
 
 	print("  dist_grid:")
-	#debug_print_mat2(dist_grid)
 	
 	var free_cells: int = _get_empty_cells()
 	
@@ -152,10 +156,7 @@ func place_rooms(rooms: Array[RoomArea]) -> void:
 	var room_dist_entropy: Array[Array] = _create_int_grid(0)
 
 	for room in rooms:
-		print("------------------- room: ", rooms.find(room), " -------------------")
 		var room_radius: int = floor(sqrt(room.rel_size*free_cells)/2)
-		print("  room.rel_size: ", room.rel_size)
-		print("  room_radius: ", room_radius)
 		var entropy: Array[Array] = []
 		
 		# optimal wall distance
@@ -169,7 +170,6 @@ func place_rooms(rooms: Array[RoomArea]) -> void:
 					#row.append(min(0, dist))
 					row.append(abs(dist))
 			entropy.append(row)
-		debug_print_mat2(entropy)
 		
 		# make rooms not be too close together
 		entropy = _combine_entropy(entropy, room_dist_entropy)
@@ -646,6 +646,22 @@ func get_rooms() -> Array[int]:
 				rooms.append(cell.room_id)
 	rooms.sort()
 	return rooms
+
+
+func get_subdivided_grid() -> FloorPlanGrid:
+	var new_width: int = width * 2
+	var new_height: int = height * 2
+	var new_grid: FloorPlanGrid = FloorPlanGrid.new(new_width, new_height, grid_resolution)
+	
+	for y in range(height):
+		for x in range(width):
+			var old_cell: FloorPlanCell = get_cell(x, y)
+			new_grid.set_cell(x*2,     y*2,     old_cell) # top-left
+			new_grid.set_cell(x*2 + 1, y*2,     old_cell) # top-right
+			new_grid.set_cell(x*2,     y*2 + 1, old_cell) # bottom-left
+			new_grid.set_cell(x*2 + 1, y*2 + 1, old_cell) # bottom-right
+	
+	return new_grid
 
 
 func to_texture() -> Image:

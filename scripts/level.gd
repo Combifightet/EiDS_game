@@ -22,9 +22,9 @@ func _cell_equals(a: FloorPlanCell, b: FloorPlanCell) -> bool:
 		a.room_id != b.room_id
 	)
 
-func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = []) -> void:
+func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> void:
 	custom_grid_map.clear()
-	
+		
 	for y in range(floor_plan_grid.height):
 		for x in range(floor_plan_grid.width):
 			# TODO: calculate peering bits, by checking cell id's
@@ -89,3 +89,8 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 				Vector3i(x, 0, y),
 				custom_grid_map.tiles[peering_bits]
 			)
+
+			var subd_scale: float = pow(2, max(0, subdivisions))
+
+			custom_grid_map.scale = Vector3(1/grid_size, wall_height, 1/grid_size)
+			custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)

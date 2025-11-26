@@ -315,8 +315,9 @@ func _generate_doors():
 		i += 1
 	
 	# add some more random connections
-	for _i in range(roundi(len(doors_mst_graph.edges)*2)):
-		doors_graph.edges.remove_at(randi()%len(doors_graph.edges))
+	if len(doors_graph.edges)>0:
+		for _i in range(roundi(len(doors_mst_graph.edges)*2)):
+			doors_graph.edges.remove_at(randi()%len(doors_graph.edges))
 	
 	
 	for edge in doors_graph.edges:
@@ -392,8 +393,54 @@ func _select_best_door(doors: Array[Door]) -> Door:
 			best_door = door
 	return best_door
 
+static func subdivide_doors(door_list: Array[Door]) -> Array[Door]:
+	var new_doors: Array[Door] = []
 
-func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
+	for door in door_list:
+		
+		if door.from.x == door.to.x:
+			# vertical door
+			new_doors.append(Door.new(
+				door.from * 2 + (Vector2i(0,1) if door.from.y < door.to.y else Vector2i.ZERO),
+				door.to   * 2 + (Vector2i.ZERO if door.from.y < door.to.y else Vector2i(0,1)),
+				door.from_id,
+				door.to_id,
+				door.outside_door
+			))
+			new_doors.append(Door.new(
+				door.from * 2 + (Vector2i.ONE if door.from.y < door.to.y else Vector2i(1,0)),
+				door.to   * 2 + (Vector2i(1,0) if door.from.y < door.to.y else Vector2i.ONE),
+				door.from_id,
+				door.to_id,
+				door.outside_door
+			))
+		else:
+			# horizontal door
+			new_doors.append(Door.new(
+				door.from * 2 + (Vector2i(1,0) if door.from.x < door.to.x else Vector2i.ZERO),
+				door.to   * 2 + (Vector2i.ZERO if door.from.x < door.to.x else Vector2i(1,0)),
+				door.from_id,
+				door.to_id,
+				door.outside_door
+			))
+			new_doors.append(Door.new(
+				door.from * 2 + (Vector2i.ONE if door.from.x < door.to.x else Vector2i(0,1)),
+				door.to   * 2 + (Vector2i(0,1) if door.from.x < door.to.x else Vector2i.ONE),
+				door.from_id,
+				door.to_id,
+				door.outside_door
+			))
+	
+	return new_doors
+
+func to_connectivity_dict(subdivisions: int = 0) -> Dictionary[Vector2i, Array]:
+	var temp_grid: FloorPlanGrid = _floorplan_grid
+
+	# subdivide the grid if needed
+	for _i in range(subdivisions):
+		temp_grid = temp_grid.get_subdivided_grid()
+
+
 	var connectivity_dict: Dictionary[Vector2i, Array] = {}
 	# Test direction
 	var directions: Array[Vector2i] = [
@@ -407,7 +454,7 @@ func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
 		Vector2i.DOWN,
 	]
 	
-	var grid: Array[Array] = get_grid().grid
+	var grid: Array[Array] = temp_grid.grid
 	for y in range(grid.size()):
 		for x in range(grid[y].size()):
 			var cell: FloorPlanCell = grid[y][x]
@@ -423,9 +470,42 @@ func to_connectivity_dict() -> Dictionary[Vector2i, Array]:
 					continue
 				if cell.room_id == grid[n_y][n_x].room_id:
 					connectivity_dict[Vector2i(x,y)].append(Vector2i(n_x, n_y))
-	for door in _doors_list:
+	
+	# subdivide the doors if needed
+	var temp_doors: Array[Door] = _doors_list
+	print()
+	print(temp_doors)
+	for _i in range(subdivisions):
+		temp_doors = subdivide_doors(temp_doors)
+		print()
+		print(temp_doors)
+	print()
+
+	for door in temp_doors:
 		connectivity_dict[door.from].append(door.to)
 		connectivity_dict[door.to].append(door.from)
+
+		# merge adjacent doors:
+		if door.from.x == door.to.x:
+			# vertical door
+			# check if there is another door to the right
+			if temp_doors.any(
+				func(d: Door): return d.from == door.from + Vector2i(1,0) and \
+									  d.to   == door.to   + Vector2i(1,0)):
+				connectivity_dict[door.from].append(door.to + Vector2i(1,0))
+				connectivity_dict[door.from + Vector2i(1,0)].append(door.to)
+				connectivity_dict[door.to].append(door.from + Vector2i(1,0))
+				connectivity_dict[door.to + Vector2i(1,0)].append(door.from)
+		else:
+			# horizontal door
+			# chekc if there is another door below
+			if temp_doors.any(
+				func(d: Door): return d.from == door.from + Vector2i(0,1) and \
+									  d.to   == door.to   + Vector2i(0,1)):
+				connectivity_dict[door.from].append(door.to + Vector2i(0,1))
+				connectivity_dict[door.from + Vector2i(0,1)].append(door.to)
+				connectivity_dict[door.to].append(door.from + Vector2i(0,1))
+				connectivity_dict[door.to + Vector2i(0,1)].append(door.from)
 	
 	return connectivity_dict
 

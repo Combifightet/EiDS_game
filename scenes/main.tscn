@@ -66,7 +66,7 @@ environment = SubResource("Environment_tefeu")
 [node name="Pathmarkers" type="Node3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport"]
+[node name="Ground" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -0.001, 0)
 mesh = SubResource("PlaneMesh_tefeu")
 skeleton = NodePath("../../..")
