@@ -9,6 +9,7 @@ radius = 0.25
 radius = 0.25
 
 [node name="player" type="CharacterBody3D" node_paths=PackedStringArray("collision_shape", "mesh")]
+collision_mask = 15
 script = ExtResource("1_3vyb7")
 collision_shape = NodePath("CollisionShape3D")
 mesh = NodePath("CollisionShape3D/MeshInstance3D")

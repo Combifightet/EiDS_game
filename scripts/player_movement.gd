@@ -34,6 +34,8 @@ var debug_sphere = SphereMesh.new()
 
 var _player_material: StandardMaterial3D
 
+var points: int = 0
+
 func _ready() -> void:
 	# 1. Create a material for the player mesh
 	_player_material = StandardMaterial3D.new()
@@ -260,3 +262,7 @@ func _grid_to_world(grid_pos: Vector2i) -> Vector3:
 	var world_x = (float(grid_pos.x+0.5) / _grid_resolution) + _grid_origin.x
 	var world_z = (float(grid_pos.y+0.5) / _grid_resolution) + _grid_origin.z
 	return Vector3(world_x, 0.0, world_z)
+
+func add_points(value: int) -> void:
+	points += value;
+	points = max(0, points)

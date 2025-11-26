@@ -315,9 +315,10 @@ func _generate_doors():
 		i += 1
 	
 	# add some more random connections
-	if len(doors_graph.edges)>0:
-		for _i in range(roundi(len(doors_mst_graph.edges)*2)):
-			doors_graph.edges.remove_at(randi()%len(doors_graph.edges))
+	for _i in range(roundi(len(doors_mst_graph.edges)*2)):
+		if len(doors_graph.edges)>=0:
+			break
+		doors_graph.edges.remove_at(randi()%len(doors_graph.edges))
 	
 	
 	for edge in doors_graph.edges:

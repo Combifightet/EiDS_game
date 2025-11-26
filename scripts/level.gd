@@ -3,7 +3,7 @@ class_name LevelGen
 
 @onready var custom_grid_map: CustomGridMap = $CustomGridMap
 
-@export var wall_height: float = 1
+@export var wall_height: float = 1.5
 @export var grid_size: float = 2
 
 

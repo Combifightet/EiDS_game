@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=17 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="3_sugp2"]
@@ -6,9 +6,17 @@
 [ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="5_tbgi4"]
 [ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dowgpjp8sv203" path="res://scenes/collectible.tscn" id="7_o6xl0"]
+[ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="8_tipki"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6xl0"]
+
+[sub_resource type="Sky" id="Sky_tipki"]
+sky_material = SubResource("ProceduralSkyMaterial_o6xl0")
 
 [sub_resource type="Environment" id="Environment_tefeu"]
-background_color = Color(0.17254902, 0.1882353, 0.21176471, 1)
+background_mode = 2
+sky = SubResource("Sky_tipki")
 ambient_light_source = 2
 ambient_light_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
 
@@ -31,6 +39,10 @@ shader_parameter/lineShadow = 0.55
 material = SubResource("ShaderMaterial_tipki")
 flip_faces = true
 size = Vector2(3, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o6xl0"]
+font_size = 24
+font_color = Color(0.8784314, 0.8784314, 0.8784314, 1)
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("player_node")]
 script = ExtResource("1_o5qli")
@@ -86,3 +98,29 @@ far = 100.0
 mesh = SubResource("QuadMesh_tefeu")
 
 [node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_tefeu")]
+
+[node name="Collectible" parent="PixelViewportContainer/PixelViewport/Level" instance=ExtResource("7_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="GameUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_tipki")
+
+[node name="Points" type="Label" parent="GameUi"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 62.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Points: 0"
+label_settings = SubResource("LabelSettings_o6xl0")
+horizontal_alignment = 1
+vertical_alignment = 1
