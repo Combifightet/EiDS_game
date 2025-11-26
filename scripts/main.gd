@@ -14,7 +14,7 @@ func _ready() -> void:
 	#floorplan_gen.set_seed(7)
 	randomize()
 	floorplan_gen.set_seed(randi())
-	floorplan_gen.generate(FloorPlanGen.HouseSize.SMALL)
+	floorplan_gen.generate(FloorPlanGen.HouseSize.NORMAL)
 	print("last_seed: ", floorplan_gen.get_last_seed())
 
 	print("displaying grid ...")
@@ -57,8 +57,8 @@ func _ready() -> void:
 	# --- This console debug print is still useful ---
 	grid.print_grid()
 	
-	print("\n\nconnectivity:")
-	print(dict_connections_to_grid_string(connectivity))
+	#print("\n\nconnectivity:")
+	#print(dict_connections_to_grid_string(connectivity))
 	print("\n\nconnectivity (original):")
 	print(dict_connections_to_grid_string(connectivity_og))
 	

@@ -40,8 +40,10 @@ func get_mst() -> Graph:
 	
 	var start_node: int = unexplored[0]
 	min_weight[start_node] = 0
-	
+	print("unexplored:")
+	print(unexplored)
 	while not unexplored.is_empty():
+		print("  ", unexplored)
 		# Select vertex in unexplored with minimum cost
 		# sort with descending weight
 		unexplored.sort_custom(func(a, b): return min_weight[a] > min_weight[b])
@@ -64,9 +66,12 @@ func get_mst() -> Graph:
 	
 	var mst_edges: Array[Edge] = []
 	var mst_nodes: Array[int] = []
+	print("nodes:  ", nodes)
+	print("mst_edges:  ", mst_edges)
 	for node in nodes:
 		if min_edge.keys().find(node) >= 0:
 			mst_edges.append(min_edge[node])
+			print("mst_edges:  ", mst_edges)
 	for edge in mst_edges:
 		if mst_nodes.find(edge.start) < 0:
 			mst_nodes.append(edge.start)
