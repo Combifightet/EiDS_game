@@ -98,6 +98,10 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 			custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)
 	
 	_place_collectibles(floor_plan_grid, doors)
+	
+	_extend_top()
+
+
 
 func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> void:
 	var rooms: Dictionary[int, Vector2i] = {}
@@ -163,4 +167,23 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 		add_child(collectible)
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
+
+
+
+func _extend_top() -> void:
+	var min_cell: Vector2i = Vector2i(INF, INF)
+	var max_cell: Vector2i = Vector2i(-INF, -INF)
+	for cell in custom_grid_map.get_used_cells():
+		if cell.x < min_cell.x:
+			min_cell.x = cell.x
+		if cell.x > max_cell.x:
+			max_cell.x = cell.x
+		if cell.y < min_cell.y:
+			min_cell.y = cell.y
+		if cell.y > max_cell.y:
+			max_cell.y = cell.y
+	
+	#custom_grid_map.global_position
+	custom_grid_map.map_to_local(Vector3i(min_cell.x, 0, min_cell.y))
 		
+	
