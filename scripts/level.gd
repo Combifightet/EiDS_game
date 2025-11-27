@@ -97,9 +97,9 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 			custom_grid_map.scale = Vector3(1/grid_size, wall_height, 1/grid_size)
 			custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)
 	
-	place_rooms(floor_plan_grid, doors, subdivisions)
+	_place_collectibles(floor_plan_grid, doors)
 
-func place_rooms(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door], subdivisions: int = 0) -> void:
+func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> void:
 	var rooms: Dictionary[int, Vector2i] = {}
 	for room_pos in floor_plan_grid._room_dict.keys():
 		rooms[floor_plan_grid._room_dict[room_pos].id] = room_pos
@@ -110,43 +110,45 @@ func place_rooms(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]
 	graph.nodes.append_array(rooms.keys())
 	for door in doors:
 		var dist: float = 1_000_000_000
-		if door.from_id != -1 and door.to_id != -1:
+		if door.from_id != FloorPlanCell.OUTSIDE and door.to_id != FloorPlanCell.OUTSIDE:
 			dist = (rooms[door.from_id]-rooms[door.to_id]).length()
-			graph.edges.append(
-				Graph.Edge.new(door.from_id, door.to_id, dist)
-			)
-			graph.edges.append(
-				Graph.Edge.new(door.to_id, door.from_id, dist)
-			)
-		else:
-			graph.edges.insert(
-				0, 
-				Graph.Edge.new(door.from_id, door.to_id, 1_000_000_000)
-			)
-	
-	print()
-	print(graph.to_dot("ConnectivityGraph"))
-	print()
+		graph.edges.append(
+			Graph.Edge.new(door.from_id, door.to_id, dist)
+		)
 	
 	# ensure that each room is reachable
 	var mst_graph: Graph = graph.get_mst()
-	print()
-	print(mst_graph.to_dot("MstConnectivityGraph"))
-	print()
+
+	# Sort nodes by distance from node -1 using BFS
+	var sorted_room_ids: Array[int] = []
+	var distance: Dictionary[int, int] = {}
+	var queue: Array[int] = []
+
+	# Start from outside  (id == -1)
+	var start_node: int = mst_graph.nodes.min()
+	queue.append(start_node)
+	distance[start_node] = 0
+	sorted_room_ids.append(start_node)
+
+	# BFS traversal
+	while not queue.is_empty():
+		var current: int = queue.pop_front()
+		var connections: Array[int] = mst_graph.get_connections_from(current)
+		
+		for neighbor in connections:
+			if not distance.has(neighbor):
+				distance[neighbor] = distance[current] + 1
+				queue.append(neighbor)
+				sorted_room_ids.append(neighbor)
 	
-	
-	var sorted_room_ids: Array[int] = [mst_graph.edges[0].start]
-	# TODO: this doesnt sort them in the right order
-	for edge in mst_graph.edges:
-		sorted_room_ids.append(edge.end)
-	
-	var outside_index: int = sorted_room_ids.find(-1)
-	if outside_index >= 0:
-		sorted_room_ids.remove_at(outside_index)
+	# remove outside "room" if it exists
+	print(sorted_room_ids)
+	if sorted_room_ids[0] == FloorPlanCell.OUTSIDE:
+		sorted_room_ids.remove_at(0)
 	var furthest_room: int = sorted_room_ids.pop_back()
-	var middle_index: int = floor((len(sorted_room_ids)-1)/2.0)
-	var far_middle_room: int = sorted_room_ids[middle_index+1]
-	var near_middle_room: int = sorted_room_ids[middle_index]
+	var middle_index: int = floor((len(sorted_room_ids))/2.0)
+	var far_middle_room: int = sorted_room_ids[middle_index]
+	var near_middle_room: int = sorted_room_ids[middle_index-1]
 	
 	var collectible_pos: Array[Vector2i] = [
 		rooms[furthest_room],
@@ -161,6 +163,4 @@ func place_rooms(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]
 		add_child(collectible)
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
-		
-		print("Collectible(",i,"),  value: ", collectible.value, "  ->  ", collectible_pos[i])
 		
