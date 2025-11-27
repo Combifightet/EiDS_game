@@ -434,8 +434,8 @@ static func subdivide_doors(door_list: Array[Door]) -> Array[Door]:
 	
 	return new_doors
 
-func to_connectivity_dict(subdivisions: int = 0) -> Dictionary[Vector2i, Array]:
-	var temp_grid: FloorPlanGrid = _floorplan_grid
+static func get_connectivity_dict(floorplan_grid: FloorPlanGrid, doors: Array[Door], subdivisions: int = 0) -> Dictionary[Vector2i, Array]:
+	var temp_grid: FloorPlanGrid = floorplan_grid
 
 	# subdivide the grid if needed
 	for _i in range(subdivisions):
@@ -473,7 +473,7 @@ func to_connectivity_dict(subdivisions: int = 0) -> Dictionary[Vector2i, Array]:
 					connectivity_dict[Vector2i(x,y)].append(Vector2i(n_x, n_y))
 	
 	# subdivide the doors if needed
-	var temp_doors: Array[Door] = _doors_list
+	var temp_doors: Array[Door] = doors
 	print()
 	print(temp_doors)
 	for _i in range(subdivisions):

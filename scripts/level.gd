@@ -37,7 +37,7 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 				false, false, false,
 				false, false, false
 			]
-			if cell != null:
+			if cell != null and not cell.is_empty():
 				neighbours[4] = true
 				
 				for door in doors:
