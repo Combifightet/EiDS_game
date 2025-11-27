@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://c8r4kfj1lcsea"]
 
-[ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/main.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="3_sugp2"]
 [ext_resource type="Shader" uid="uid://bmgcai44pktxg" path="res://shaders/grid.gdshader" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="5_tbgi4"]
@@ -43,12 +43,15 @@ size = Vector2(3, 2)
 font_size = 24
 font_color = Color(0.8784314, 0.8784314, 0.8784314, 1)
 
-[node name="Main" type="Node3D" node_paths=PackedStringArray("player_node")]
+[node name="Game" type="Control" node_paths=PackedStringArray("player_node")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_o5qli")
 player_node = NodePath("PixelViewportContainer/PixelViewport/Player")
 
 [node name="PixelViewportContainer" type="SubViewportContainer" parent="."]
 unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -60,7 +63,7 @@ stretch_shrink = 3
 [node name="PixelViewport" type="SubViewport" parent="PixelViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
-size = Vector2i(320, 180)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Player" parent="PixelViewportContainer/PixelViewport" node_paths=PackedStringArray("path_markers_container") instance=ExtResource("3_sugp2")]
@@ -90,6 +93,7 @@ script = ExtResource("5_tbgi4")
 transform = Transform3D(0.7071067, -0.35355335, 0.61237234, 0, 0.8660253, 0.49999997, -0.7071067, -0.35355335, 0.61237234, 10, 10, 10)
 doppler_tracking = 2
 projection = 1
+current = true
 size = 10.0
 far = 100.0
 
@@ -99,7 +103,7 @@ mesh = SubResource("QuadMesh_tefeu")
 [node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_tefeu")]
 
 [node name="GameUi" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
