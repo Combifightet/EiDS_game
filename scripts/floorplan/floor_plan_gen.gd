@@ -234,7 +234,7 @@ func generate_custom(initial_vertecies: int = 6, randomness: float = 0.6, radius
 	print("  generating grid ...")
 	_floorplan_grid = FloorPlanGrid.from_points(building_outline, _room_grid_resolution)
 	print("    printing grid ...")
-	_floorplan_grid.print_grid()
+	FloorPlanGrid.print_grid(_floorplan_grid)
 	
 	print("  generating room set (", room_count, ") ...")
 	var rooms: Array[RoomArea] = _generate_room_areas(room_count, randomness)
@@ -248,7 +248,7 @@ func generate_custom(initial_vertecies: int = 6, randomness: float = 0.6, radius
 	# print("  placing inner doors ...")
 	# print("  placing windows") # optional
 	# print("  placing entrance door")
-	# _floorplan_grid.print_grid()
+	# FloorPlanGrid.print_grid(_floorplan_grid)
 
 func _generate_doors():
 	var connectivity_dict: Dictionary[int, Array] = {}

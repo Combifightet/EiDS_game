@@ -14,11 +14,13 @@ func _ready() -> void:
 	#floorplan_gen.set_seed(7)
 	randomize()
 	floorplan_gen.set_seed(randi())
-	floorplan_gen.generate(FloorPlanGen.HouseSize.NORMAL)
+	floorplan_gen.generate(FloorPlanGen.HouseSize.SMALL)
 	print("last_seed: ", floorplan_gen.get_last_seed())
 
 	print("displaying grid ...")
 	var grid: FloorPlanGrid = floorplan_gen.get_grid()
+
+	WorldGen.generate_map(grid, floorplan_gen.building_outline)
 		
 	# --- Setup the Player ---
 	var connectivity_og: Dictionary[Vector2i, Array] = floorplan_gen.to_connectivity_dict()
@@ -55,7 +57,7 @@ func _ready() -> void:
 	player_node.global_position = Vector3(world_x, 0.7, world_z)
 	
 	# --- This console debug print is still useful ---
-	grid.print_grid()
+	FloorPlanGrid.print_grid(grid)
 	
 	#print("\n\nconnectivity:")
 	#print(dict_connections_to_grid_string(connectivity))

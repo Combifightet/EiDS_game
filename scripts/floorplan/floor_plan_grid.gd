@@ -3,7 +3,7 @@ class_name FloorPlanGrid
 
 ## Implements the room expansion algorithm for floor plan generation
 
-var grid: Array[Array] = [] ## should be of type `Array[Array[FloorPlanCell]]`
+var grid: Array[Array] = [] ## should be of type `Array[Array[[FloorPlanCell]]]`
 var width: int = 0
 var height: int = 0
 var grid_resolution: int = 1
@@ -681,11 +681,11 @@ func to_texture() -> Image:
 
 
 ## Debug: Print grid
-func print_grid() -> void:
-	for y: int in range(height):
+static func print_grid(floorplan: FloorPlanGrid) -> void:
+	for y: int in range(floorplan.height):
 		var row_str: String = ""
-		for x: int in range(width):
-			var cell: FloorPlanCell = get_cell(x,y)
+		for x: int in range(floorplan.width):
+			var cell: FloorPlanCell = floorplan.get_cell(x,y)
 			if cell.is_outside():
 				row_str += " X "
 			elif cell.is_empty():
@@ -695,12 +695,14 @@ func print_grid() -> void:
 		print(row_str)
 
 ## Debug: Print grid
-func debug_print_mat2(mat2: Array[Array]) -> void:
+static func debug_print_mat2(mat2: Array[Array]) -> void:
 	for y: int in range(mat2.size()):
 		var row_str: String = ""
 		for x: int in range(mat2[y].size()):
-			if mat2[y][x] == -1:
+			if mat2[y][x] == FloorPlanCell.OUTSIDE:
 				row_str += "- "
+			elif mat2[y][x] == FloorPlanCell.NO_ROOM:
+				row_str += "? " 
 			else:
 				row_str += str(mat2[y][x]) + " "
 		print(row_str)

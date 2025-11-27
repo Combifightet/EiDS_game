@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://c8r4kfj1lcsea"]
 
-[ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="3_sugp2"]
-[ext_resource type="Shader" uid="uid://bmgcai44pktxg" path="res://shaders/grid.gdshader" id="4_jyhfs"]
-[ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="5_tbgi4"]
-[ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="6_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_tefeu"]
-[ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="8_tipki"]
+[ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="2_gee14"]
+[ext_resource type="Shader" uid="uid://bmgcai44pktxg" path="res://shaders/grid.gdshader" id="3_0tnpc"]
+[ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="4_vtaks"]
+[ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="5_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_dinhu"]
+[ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="7_kvuet"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6xl0"]
 
@@ -21,7 +21,7 @@ ambient_light_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tbgi4"]
 render_priority = 0
-shader = ExtResource("4_jyhfs")
+shader = ExtResource("3_0tnpc")
 shader_parameter/color_a = Color(0.21, 0.24, 0.29, 1)
 shader_parameter/color_b = Color(0.11, 0.13, 0.16, 1)
 
@@ -30,7 +30,7 @@ material = SubResource("ShaderMaterial_tbgi4")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 render_priority = 0
-shader = ExtResource("6_o6xl0")
+shader = ExtResource("5_kvpfn")
 shader_parameter/lineHighlight = 0.2
 shader_parameter/lineShadow = 0.55
 
@@ -45,8 +45,14 @@ font_color = Color(0.8784314, 0.8784314, 0.8784314, 1)
 
 [node name="Game" type="Control" node_paths=PackedStringArray("player_node")]
 layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_o5qli")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_u5sy4")
 player_node = NodePath("PixelViewportContainer/PixelViewport/Player")
 
 [node name="PixelViewportContainer" type="SubViewportContainer" parent="."]
@@ -63,10 +69,10 @@ stretch_shrink = 3
 [node name="PixelViewport" type="SubViewport" parent="PixelViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(320, 180)
 render_target_update_mode = 4
 
-[node name="Player" parent="PixelViewportContainer/PixelViewport" node_paths=PackedStringArray("path_markers_container") instance=ExtResource("3_sugp2")]
+[node name="Player" parent="PixelViewportContainer/PixelViewport" node_paths=PackedStringArray("path_markers_container") instance=ExtResource("2_gee14")]
 unique_name_in_owner = true
 path_markers_container = NodePath("../Pathmarkers")
 
@@ -87,7 +93,7 @@ skeleton = NodePath("../../..")
 
 [node name="CameraMount" type="Node3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
-script = ExtResource("5_tbgi4")
+script = ExtResource("4_vtaks")
 
 [node name="Camera3D" type="Camera3D" parent="PixelViewportContainer/PixelViewport/CameraMount"]
 transform = Transform3D(0.7071067, -0.35355335, 0.61237234, 0, 0.8660253, 0.49999997, -0.7071067, -0.35355335, 0.61237234, 10, 10, 10)
@@ -100,7 +106,7 @@ far = 100.0
 [node name="PostProcessing" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport/CameraMount/Camera3D"]
 mesh = SubResource("QuadMesh_tefeu")
 
-[node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_tefeu")]
+[node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_dinhu")]
 
 [node name="GameUi" type="Control" parent="."]
 layout_mode = 1
@@ -111,7 +117,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("8_tipki")
+script = ExtResource("7_kvuet")
 
 [node name="Points" type="Label" parent="GameUi"]
 layout_mode = 1
