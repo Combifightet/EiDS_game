@@ -1,7 +1,7 @@
 extends RefCounted
 class_name WorldGen
 
-const BORDER_DIST: float = 10 ##average distance of the border (affected by `NOISE_STRENGTH`)
+const BORDER_DIST: float = 6 ##average distance of the border (affected by `NOISE_STRENGTH`)
 const NOISE_STRENGTH: float = 2 ## will be in the range of `± n`
 const NOISE_SCALE: float = 10
 const SEED: int = -1
@@ -26,13 +26,14 @@ func _init(floorplan: FloorPlanGrid, door_list: Array[FloorPlanGen.Door], outlin
 	doors = _padd_doors(door_list)
 
 func _generate_map(floorplan: FloorPlanGrid, outline: Array[Vector2]) -> FloorPlanGrid:
-	_padding = ceili(BORDER_DIST + abs(NOISE_STRENGTH) + 1)
+	_padding = ceili(BORDER_DIST + abs(NOISE_STRENGTH))
 	
 	## Generate empty floor plan grid based on the convex hull
 	var temp_floor_plan: FloorPlanGrid = FloorPlanGrid.from_points(
 		convex_hull(outline, false),
 		floorplan.grid_resolution
 	)
+	FloorPlanGrid.print_grid(temp_floor_plan)
 	var temp_grid: Array[Array] = temp_floor_plan.grid
 	
 	## Setup empty distance map
@@ -42,15 +43,16 @@ func _generate_map(floorplan: FloorPlanGrid, outline: Array[Vector2]) -> FloorPl
 	for y in range(-_padding, len(temp_grid) + _padding):
 		dist_grid.append([])
 		for x in range(-_padding, len(temp_grid[0]) + _padding):
-			if (y >= 0 and y < len(temp_grid)) and (x>=0 and x < len(temp_grid[y])):
+			var cell = temp_floor_plan.get_cell(x, y)
+			if cell and cell.is_empty():
 				dist_grid[y+_padding].append(0)
 				queue.append(Vector2i(x+_padding, y+_padding))
 			else:
 				dist_grid[y+_padding].append(INF)
 	
 	
-	#print("\nDistance Grid: (before)")
-	#FloorPlanGrid.debug_print_mat2(dist_grid)
+	print("\nDistance Grid: (before)")
+	FloorPlanGrid.debug_print_mat2(dist_grid)
 	
 	## Filll distance map using BFS (might also be Daikstra (I have no idea anymore .-.))
 	var directions: Array[Vector2i] = [
@@ -178,10 +180,6 @@ static func convex_hull(points: Array[Vector2], clockwies: bool = true) -> Array
 			outgoing_vec = next_point-point
 			
 			var angle: float = angle_difference(incoming_vec.angle(), outgoing_vec.angle())
-			# TODO: not really sure if this works as intended
-			print("incoming_vec: ", incoming_vec)
-			print("outgoing_vec: ", outgoing_vec)
-			print("  angle: ", angle)
 			
 			if angle < 0:
 				hull.append(point)
