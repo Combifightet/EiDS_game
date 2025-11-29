@@ -155,9 +155,9 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 	var near_middle_room: int = sorted_room_ids[middle_index-1]
 	
 	var collectible_pos: Array[Vector2i] = [
-		rooms[furthest_room],
-		rooms[far_middle_room],
-		rooms[near_middle_room],
+		floor_plan_grid.get_room_center(furthest_room),
+		floor_plan_grid.get_room_center(far_middle_room),
+		floor_plan_grid.get_room_center(near_middle_room),
 	]
 	
 	for i in range(len(collectible_pos)):
@@ -185,5 +185,6 @@ func _extend_top() -> void:
 	
 	#custom_grid_map.global_position
 	custom_grid_map.map_to_local(Vector3i(min_cell.x, 0, min_cell.y))
+	# TODO: does nothing yet
 		
 	

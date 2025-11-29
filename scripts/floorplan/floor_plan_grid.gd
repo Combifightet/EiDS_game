@@ -637,6 +637,38 @@ func _get_room_dists(room_ids: Array[int]) -> Array[Array]:
 	return dist_grid
 
 
+func get_room_center(id: int) -> Vector2i:
+	if _room_bounds.keys().count(id) == 0:
+		return Vector2i(-1, -1)
+	
+	var room_ids: Array[int] = _room_bounds.keys()
+	room_ids.erase(id)
+	room_ids.append(FloorPlanCell.OUTSIDE)
+	room_ids.append(FloorPlanCell.NO_ROOM)
+	
+	var dist_grid: Array[Array] = _get_room_dists(room_ids)
+	
+	var max_dist: int = 0
+	var max_cells: Array[Vector2i] = []
+	for y in range(height):
+		for x in range(width):
+			if max_dist < dist_grid[y][x]:
+				max_dist = dist_grid[y][x]
+				max_cells = []
+			if max_dist == dist_grid[y][x]:
+				max_cells.append(Vector2i(x,y))
+	
+	var center: Vector2 = Vector2.ZERO
+	for pos: Vector2i in max_cells:
+		center += Vector2(pos)
+	center /= len(max_cells)
+	
+	# sort based on distance to the center of the furthest inward cells
+	max_cells.sort_custom(func(a, b): return (center-Vector2(a)).length() < (center-Vector2(b)).length())
+	
+	return max_cells[0]
+
+
 func get_rooms() -> Array[int]:
 	var rooms: Array[int] = []
 	for y in range(height):
