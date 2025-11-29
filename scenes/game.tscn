@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=18 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="2_gee14"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="5_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_dinhu"]
 [ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="7_kvuet"]
+[ext_resource type="Shader" uid="uid://dvvy4jkd0k21h" path="res://shaders/vignette.gdshader" id="8_gee14"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6xl0"]
 
@@ -38,6 +39,12 @@ shader_parameter/lineShadow = 0.55
 material = SubResource("ShaderMaterial_tipki")
 flip_faces = true
 size = Vector2(3, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0tnpc"]
+shader = ExtResource("8_gee14")
+shader_parameter/color = Color(0.025, 0.035, 0.045, 1)
+shader_parameter/bar_ratio = 0.125
+shader_parameter/vignette_strength = 0.8999999798832
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6xl0"]
 font_size = 24
@@ -119,11 +126,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("7_kvuet")
 
+[node name="ColorRect" type="ColorRect" parent="GameUi"]
+material = SubResource("ShaderMaterial_0tnpc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05490196, 0.07058824, 0.08627451, 1)
+
 [node name="Points" type="Label" parent="GameUi"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 62.0
+offset_bottom = 66.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 text = "Points: 0"
