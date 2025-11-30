@@ -1,6 +1,6 @@
 extends Control
 
-@onready var _points_label = $Points
+@onready var _points_label = $Vignette/Points
 
 func _ready() -> void:
 	_points_label.text = str("Points: ", %Player.points)

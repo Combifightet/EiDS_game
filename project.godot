@@ -14,7 +14,7 @@ config/name="EidS game"
 config/tags=PackedStringArray("ovgu")
 run/main_scene="uid://34txyxthjka1"
 config/features=PackedStringArray("4.5", "Forward Plus")
-boot_splash/bg_color=Color(0.15686275, 0.17254902, 0.19215687, 1)
+boot_splash/bg_color=Color(0.14509805, 0.16862746, 0.20392157, 1)
 config/icon="uid://cjveh26uqowbg"
 
 [display]
@@ -57,4 +57,4 @@ back={
 
 textures/canvas_textures/default_texture_filter=0
 textures/decals/filter=2
-environment/defaults/default_clear_color=Color(0.15686275, 0.17254902, 0.19215687, 1)
+environment/defaults/default_clear_color=Color(0.14509805, 0.16862746, 0.20392157, 1)
