@@ -7,6 +7,7 @@ class_name LevelGen
 @onready var custom_grid_map: CustomGridMap = $CustomGridMap
 
 var _collectible: PackedScene = preload('res://scenes/collectible.tscn')
+var _guard_scene: PackedScene = preload("res://scenes/guard.tscn")
 
 
 func _ready() -> void:
@@ -168,6 +169,38 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
 
+
+func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D) -> void:
+	# Get all available rooms from the grid data
+	var room_positions = floor_plan_grid._room_dict.keys()
+	
+	if room_positions.is_empty():
+		return
+
+	# Pick a random room. 
+	# Note: You might want to filter out the room where the player starts 
+	# (usually the top-left one) to avoid instant detection.
+	var random_room_pos = room_positions.pick_random()
+	var room_id = floor_plan_grid._room_dict[random_room_pos].id
+	
+	# Get the center coordinate of that room
+	var grid_pos: Vector2i = floor_plan_grid.get_room_center(room_id)
+	
+	# Instantiate the guard
+	var guard_instance = _guard_scene.instantiate()
+	add_child(guard_instance)
+	
+	# Position the guard
+	# We use 0.0 for Y, matching the grid logic, but the guard script 
+	# adds eyes_height offset automatically.
+	guard_instance.global_position = Vector3(grid_pos.x, 1.0, grid_pos.y)
+	
+	# Rotate guard randomly (0, 90, 180, or 270 degrees)
+	var random_rot = (randi() % 4) * 90.0
+	guard_instance.rotation_degrees.y = random_rot
+	
+	# 3. Assign the player reference required by guard.gd 
+	guard_instance.target_player = target_player
 
 
 func _extend_top() -> void:

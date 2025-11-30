@@ -68,6 +68,8 @@ func _ready() -> void:
 	var level_gen: LevelGen = %PixelViewport/Level
 	level_gen.position = Vector3(world.grid.origin.x, 0, world.grid.origin.y)
 	level_gen.from_grid(world.grid, world.doors, GRID_SUBDIVISIONS)
+	
+	level_gen.place_single_guard(world.grid, player_node)
 
 
 
