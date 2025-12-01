@@ -316,6 +316,7 @@ doppler_tracking = 2
 projection = 1
 current = true
 size = 10.0
+near = 0.001
 far = 100.0
 
 [node name="PostProcessing" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport/CameraMount/Camera3D"]

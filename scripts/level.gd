@@ -182,27 +182,31 @@ func _extend_border() -> void:
 		min_cell.y = mini(min_cell.y, cell.z)
 		max_cell.y = maxi(max_cell.y, cell.z)
 	
-	var min_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(min_cell.x, 1, min_cell.y))
-	var max_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(max_cell.x, 1, max_cell.y))
+	var min_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(min_cell.x, 0, min_cell.y))
+	var max_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(max_cell.x, 0, max_cell.y))
 	
-	_create_border_plane(
-		min_pos,
-		Vector3(max_pos.x+PADDING, 1, -PADDING)
+	_create_border_plane( # -Z direction
+		Vector3(min_pos.x, wall_height, min_pos.z),
+		Vector3(max_pos.x+PADDING, wall_height, min_pos.z-PADDING)
 	)
-	print("from: ", min_pos)
-	print("to:   ", Vector3(max_pos.x+PADDING, 1, -PADDING))
-	
-	
-	# TODO: does nothing yet
-		
+	_create_border_plane( # +X direction
+		Vector3(max_pos.x, wall_height, min_pos.z),
+		Vector3(max_pos.x+PADDING, wall_height, max_pos.z+PADDING)
+	)
+	_create_border_plane( # +Z direction
+		Vector3(max_pos.x, wall_height, max_pos.z),
+		Vector3(min_pos.x-PADDING, wall_height, max_pos.z+PADDING)
+	)
+	_create_border_plane( # -X direction
+		Vector3(min_pos.x, wall_height, max_pos.z),
+		Vector3(min_pos.x-PADDING, wall_height, min_pos.z-PADDING)
+	)
 	
 func _create_border_plane(from: Vector3, to: Vector3) -> void:
 	var mesh_instance: MeshInstance3D = MeshInstance3D.new()
 	
 	var plane_mesh: PlaneMesh = PlaneMesh.new()
-	plane_mesh.size = Vector2(from.x-to.x, from.y-to.y).abs()
-	print("  size: ", Vector2(from.x-to.x, from.y-to.y).abs())
-	print("  pos:  ", (from+to)/2)
+	plane_mesh.size = Vector2(from.x-to.x, from.z-to.z).abs()
 	
 	mesh_instance.mesh = plane_mesh
 	mesh_instance.material_override = _top_material
