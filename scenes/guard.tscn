@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bssbnhk5oj443"]
+[gd_scene load_steps=9 format=3 uid="uid://p4hc13wmrmsk"]
 
-[ext_resource type="Script" uid="uid://c0rswtf0gc4ue" path="res://scripts/guard.gd" id="1_m4fl1"]
+[ext_resource type="Script" path="res://scripts/guard.gd" id="1_m4fl1"]
 [ext_resource type="Shader" uid="uid://ka8u740ibko6" path="res://shaders/guard.gdshader" id="2_ci2qi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hhgp"]
@@ -18,7 +18,7 @@ radius = 4.0
 size = Vector2(8, 8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ygo2t"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("2_ci2qi")
 shader_parameter/vision_angle_deg = 60.0
 shader_parameter/color = Color(1, 0, 0, 0.3)
@@ -43,7 +43,7 @@ collision_layer = 0
 shape = SubResource("CylinderShape3D_k0dx2")
 
 [node name="VisionCone" type="MeshInstance3D" parent="VisionArea"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.70284146, 0)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, -0.70284146, 0)
 mesh = SubResource("PlaneMesh_ci2qi")
 surface_material_override/0 = SubResource("ShaderMaterial_ygo2t")
 
