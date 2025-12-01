@@ -8,6 +8,8 @@ class_name LevelGen
 
 var _collectible: PackedScene = preload('res://scenes/collectible.tscn')
 
+var _top_material: ShaderMaterial = preload("res://materials/top_material.tres")
+
 
 func _ready() -> void:
 	custom_grid_map.clear()
@@ -99,7 +101,7 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 	
 	_place_collectibles(floor_plan_grid, doors)
 	
-	_extend_top()
+	_extend_border()
 
 
 
@@ -170,21 +172,40 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 
 
 
-func _extend_top() -> void:
+func _extend_border() -> void:
+	const PADDING: float = 10
 	var min_cell: Vector2i = Vector2i(INF, INF)
 	var max_cell: Vector2i = Vector2i(-INF, -INF)
 	for cell in custom_grid_map.get_used_cells():
-		if cell.x < min_cell.x:
-			min_cell.x = cell.x
-		if cell.x > max_cell.x:
-			max_cell.x = cell.x
-		if cell.y < min_cell.y:
-			min_cell.y = cell.y
-		if cell.y > max_cell.y:
-			max_cell.y = cell.y
+		min_cell.x = mini(min_cell.x, cell.x)
+		max_cell.x = maxi(max_cell.x, cell.x)
+		min_cell.y = mini(min_cell.y, cell.z)
+		max_cell.y = maxi(max_cell.y, cell.z)
 	
-	#custom_grid_map.global_position
-	custom_grid_map.map_to_local(Vector3i(min_cell.x, 0, min_cell.y))
+	var min_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(min_cell.x, 1, min_cell.y))
+	var max_pos: Vector3 = custom_grid_map.map_to_local(Vector3i(max_cell.x, 1, max_cell.y))
+	
+	_create_border_plane(
+		min_pos,
+		Vector3(max_pos.x+PADDING, 1, -PADDING)
+	)
+	print("from: ", min_pos)
+	print("to:   ", Vector3(max_pos.x+PADDING, 1, -PADDING))
+	
+	
 	# TODO: does nothing yet
 		
 	
+func _create_border_plane(from: Vector3, to: Vector3) -> void:
+	var mesh_instance: MeshInstance3D = MeshInstance3D.new()
+	
+	var plane_mesh: PlaneMesh = PlaneMesh.new()
+	plane_mesh.size = Vector2(from.x-to.x, from.y-to.y).abs()
+	print("  size: ", Vector2(from.x-to.x, from.y-to.y).abs())
+	print("  pos:  ", (from+to)/2)
+	
+	mesh_instance.mesh = plane_mesh
+	mesh_instance.material_override = _top_material
+	mesh_instance.position = (from+to)/2
+	
+	add_child(mesh_instance)
