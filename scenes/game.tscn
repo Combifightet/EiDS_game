@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=54 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="2_gee14"]
@@ -172,7 +172,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -215,6 +215,26 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_js0lu"]
+atlas = ExtResource("10_vtaks")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxtfn"]
+atlas = ExtResource("10_vtaks")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twgab"]
+atlas = ExtResource("10_vtaks")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02fa5"]
+atlas = ExtResource("10_vtaks")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nepv3"]
+atlas = ExtResource("10_vtaks")
+region = Rect2(128, 32, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_suyxu"]
 atlas = ExtResource("10_vtaks")
 region = Rect2(0, 0, 32, 32)
@@ -239,6 +259,26 @@ region = Rect2(128, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_js0lu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxtfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twgab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02fa5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nepv3")
+}],
+"loop": true,
+"name": &"arrow",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_suyxu")
 }, {
 "duration": 1.0,
@@ -254,8 +294,94 @@ animations = [{
 "texture": SubResource("AtlasTexture_v2yb1")
 }],
 "loop": true,
-"name": &"default",
-"speed": 5.0
+"name": &"cross",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvpfn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js0lu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxtfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twgab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02fa5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nepv3")
+}],
+"loop": true,
+"name": &"arrow",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suyxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgl2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qouja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wljb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2yb1")
+}],
+"loop": true,
+"name": &"cross",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vtaks"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js0lu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxtfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twgab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02fa5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nepv3")
+}],
+"loop": true,
+"name": &"arrow",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suyxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgl2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qouja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wljb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2yb1")
+}],
+"loop": true,
+"name": &"cross",
+"speed": 6.0
 }]
 
 [node name="Game" type="Control" node_paths=PackedStringArray("player_node")]
@@ -357,7 +483,7 @@ label_settings = SubResource("LabelSettings_o6xl0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="GameUi/Vignette"]
+[node name="CloseButton" type="Button" parent="GameUi/Vignette"]
 layout_mode = 1
 offset_left = 16.0
 offset_top = 16.0
@@ -365,11 +491,53 @@ offset_right = 52.0
 offset_bottom = 52.0
 flat = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameUi/Vignette/Button"]
+[node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/CloseButton"]
 position = Vector2(18, 18)
 sprite_frames = SubResource("SpriteFrames_suyxu")
 autoplay = "default"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="GameUi/Vignette/Button"]
+[node name="Icon" type="AnimatedSprite2D" parent="GameUi/Vignette/CloseButton"]
 position = Vector2(18, 18)
 sprite_frames = SubResource("SpriteFrames_js0lu")
+animation = &"cross"
+autoplay = "cross"
+
+[node name="TurnLeft" type="Button" parent="GameUi/Vignette"]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 488.0
+offset_right = 422.0
+offset_bottom = 524.0
+flat = true
+
+[node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnLeft"]
+position = Vector2(18, 18)
+sprite_frames = SubResource("SpriteFrames_suyxu")
+autoplay = "default"
+
+[node name="Icon" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnLeft"]
+position = Vector2(18, 16)
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_kvpfn")
+animation = &"arrow"
+autoplay = "arrow"
+
+[node name="TurnRight" type="Button" parent="GameUi/Vignette"]
+layout_mode = 0
+offset_left = 529.0
+offset_top = 488.0
+offset_right = 565.0
+offset_bottom = 524.0
+flat = true
+
+[node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnRight"]
+position = Vector2(18, 18)
+sprite_frames = SubResource("SpriteFrames_suyxu")
+autoplay = "default"
+
+[node name="Icon" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnRight"]
+position = Vector2(18, 16)
+rotation = 3.1415927
+sprite_frames = SubResource("SpriteFrames_vtaks")
+animation = &"arrow"
+autoplay = "arrow"
