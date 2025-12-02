@@ -175,6 +175,7 @@ func _process(_delta: float):
 				var world_pos = _grid_to_world(cell_pos)
 				
 				var marker_instance = MeshInstance3D.new()
+				marker_instance.layers = 2; # 2 = terrain
 				marker_instance.mesh = debug_sphere
 				marker_instance.scale = Vector3(0.2, 0.2, 0.2)
 				path_markers_container.add_child(marker_instance) 

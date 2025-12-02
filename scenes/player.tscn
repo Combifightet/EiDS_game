@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://3ifg7pybi4rq"]
+[gd_scene load_steps=7 format=3 uid="uid://3ifg7pybi4rq"]
 
 [ext_resource type="Script" uid="uid://c2r22wr000sgt" path="res://scripts/player_movement.gd" id="1_3vyb7"]
 [ext_resource type="Shader" uid="uid://bqjk3vd6388ig" path="res://shaders/vision_cone.gdshader" id="2_g2els"]
@@ -12,16 +12,15 @@ radius = 0.25
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 render_priority = 1
 shader = ExtResource("2_g2els")
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(1, 0.47843137, 0.53333336, 0.24313726)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3vyb7"]
 material = SubResource("ShaderMaterial_qhqgy")
 size = Vector2(10, 10)
 
-[sub_resource type="BoxMesh" id="BoxMesh_g2els"]
-
 [node name="player" type="CharacterBody3D" node_paths=PackedStringArray("collision_shape", "mesh")]
-collision_mask = 15
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_3vyb7")
 collision_shape = NodePath("CollisionShape3D")
 mesh = NodePath("CollisionShape3D/MeshInstance3D")
@@ -31,26 +30,22 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.7, 0)
 shape = SubResource("CapsuleShape3D_g2els")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+layers = 2
 mesh = SubResource("CapsuleMesh_qhqgy")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(-4.3710095e-08, 0.02771228, -0.999616, 3.3643954e-10, 0.999616, 0.02771228, 1, 8.749966e-10, -4.370264e-08, 0, 0.14446712, 0)
+[node name="VisionCone" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.01, 0)
 layers = 16
 light_color = Color(1, 0.25333333, 0.19999999, 1)
-light_energy = 16.0
-light_cull_mask = 4294966288
+light_cull_mask = 4293918736
 shadow_enabled = true
-shadow_caster_mask = 4294967279
+shadow_caster_mask = 4293918725
 spot_attenuation = 0.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.037162624
 
-[node name="Ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3860261, -0.061008334, -0.07797879)
+[node name="Ground" type="MeshInstance3D" parent="VisionCone"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -2)
 layers = 16
 mesh = SubResource("PlaneMesh_3vyb7")
-
-[node name="Box" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4343464, 0.31499648, -0.7511264)
-mesh = SubResource("BoxMesh_g2els")
-skeleton = NodePath("../Ground")
+skeleton = NodePath("../..")

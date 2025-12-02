@@ -419,7 +419,10 @@ path_markers_container = NodePath("../Pathmarkers")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="PixelViewportContainer/PixelViewport"]
 transform = Transform3D(0.9238795, 0.27059808, -0.27059808, 0, 0.7071068, 0.7071068, 0.38268346, -0.6532815, 0.6532815, 0, 5, 0)
+layers = 15
+light_cull_mask = 4294967279
 shadow_enabled = true
+shadow_caster_mask = 4294967279
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="PixelViewportContainer/PixelViewport"]
 environment = SubResource("Environment_tefeu")
@@ -446,6 +449,7 @@ near = 0.001
 far = 100.0
 
 [node name="PostProcessing" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport/CameraMount/Camera3D"]
+layers = 32
 mesh = SubResource("QuadMesh_tefeu")
 
 [node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_dinhu")]

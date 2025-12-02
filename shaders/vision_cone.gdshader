@@ -4,7 +4,7 @@ uniform vec4 color: source_color = vec4(1, 0.55, 0.57, 0.9);
 
 void fragment() {
 	ALBEDO = color.rgb;
-	ALPHA = color.a;
+	ALPHA = 0.0;
 }
 
 void light() {
@@ -13,13 +13,10 @@ void light() {
 	//DIFFUSE_LIGHT = vec3(length(LIGHT));
 	//DIFFUSE_LIGHT = vec3(1.0);
 	//ALPHA = length(LIGHT);
+	float l = length(LIGHT)*ATTENUATION;
 
-	// out vec3 DIFFUSE_LIGHT
-	// Diffuse light result.
-
-	// out vec3 SPECULAR_LIGHT
-	// Specular light result.
-
-	// out float ALPHA
-	// Alpha (range of [0.0, 1.0]). If written to, the material will go to the transparent pipeline.
+	if (l > 0.001) {
+		ALPHA = color.a;
+		DIFFUSE_LIGHT = vec3(1.0);
+	}
 }
