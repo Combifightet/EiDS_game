@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://3ifg7pybi4rq"]
+[gd_scene load_steps=5 format=3 uid="uid://3ifg7pybi4rq"]
 
 [ext_resource type="Script" uid="uid://c2r22wr000sgt" path="res://scripts/player_movement.gd" id="1_3vyb7"]
-[ext_resource type="Shader" uid="uid://bqjk3vd6388ig" path="res://shaders/vision_cone.gdshader" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://cko2xbxr5j553" path="res://scenes/vision_cone.tscn" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2els"]
 radius = 0.25
@@ -9,18 +9,11 @@ radius = 0.25
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qhqgy"]
 radius = 0.25
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
-render_priority = 1
-shader = ExtResource("2_g2els")
-shader_parameter/color = Color(1, 0.47843137, 0.53333336, 0.24313726)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_3vyb7"]
-material = SubResource("ShaderMaterial_qhqgy")
-size = Vector2(10, 10)
-
 [node name="player" type="CharacterBody3D" node_paths=PackedStringArray("collision_shape", "mesh")]
 collision_layer = 2
 collision_mask = 13
+platform_floor_layers = 4278190081
+platform_wall_layers = 1
 script = ExtResource("1_3vyb7")
 collision_shape = NodePath("CollisionShape3D")
 mesh = NodePath("CollisionShape3D/MeshInstance3D")
@@ -33,19 +26,14 @@ shape = SubResource("CapsuleShape3D_g2els")
 layers = 2
 mesh = SubResource("CapsuleMesh_qhqgy")
 
-[node name="VisionCone" type="SpotLight3D" parent="."]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.01, 0)
-layers = 16
-light_color = Color(1, 0.25333333, 0.19999999, 1)
-light_cull_mask = 4293918736
-shadow_enabled = true
-shadow_caster_mask = 4293918725
-spot_attenuation = 0.0
-spot_angle = 20.0
-spot_angle_attenuation = 0.037162624
+[node name="VisionCone" parent="." instance=ExtResource("2_g2els")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="Ground" type="MeshInstance3D" parent="VisionCone"]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -2)
-layers = 16
-mesh = SubResource("PlaneMesh_3vyb7")
-skeleton = NodePath("../..")
+[node name="VisionCone2" parent="." instance=ExtResource("2_g2els")]
+transform = Transform3D(0.41951546, 0, -0.90774816, 0, 1, 0, 0.90774816, 0, 0.41951546, -2.1646566, 0.1, -0.5268843)
+view_distance = 7.6
+angle = 0.5061454830783556
+id = 1
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.5026428, -0.4214225, 0.75482005, 0, 0.8731349, 0.48747867, -0.8644942, 0.24502766, -0.43887496, 4.559428, 3.5952144, -4.732627)

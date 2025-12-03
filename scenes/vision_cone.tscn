@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cko2xbxr5j553"]
+
+[ext_resource type="Script" uid="uid://cq2xmyhsxj5pd" path="res://scripts/vision_cone.gd" id="1_a2nto"]
+[ext_resource type="Shader" uid="uid://dfh4cpwdnsf3o" path="res://shaders/vision_cone.gdshader" id="2_wwfdo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5hif"]
+render_priority = 1
+shader = ExtResource("2_wwfdo")
+shader_parameter/color = Color(1, 0.55, 0.57, 0.9)
+shader_parameter/angle = 0.698132
+shader_parameter/id = -1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wwfdo"]
+material = SubResource("ShaderMaterial_l5hif")
+
+[node name="VisionCone" type="Node3D"]
+script = ExtResource("1_a2nto")
+
+[node name="Cone" type="SpotLight3D" parent="."]
+layers = 16
+light_energy = 0.0
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+light_specular = 0.0
+light_cull_mask = 4293918736
+shadow_enabled = true
+shadow_caster_mask = 4293918725
+spot_range = 6.0
+spot_attenuation = 0.0
+spot_angle = 21.0
+spot_angle_attenuation = 0.001039688
+
+[node name="Plane" type="MeshInstance3D" parent="Cone"]
+transform = Transform3D(-5, 0, 4.371139e-07, 0, 5, 0, -4.371139e-07, 0, -5, 0, 0, 0)
+layers = 16
+mesh = SubResource("PlaneMesh_wwfdo")
+skeleton = NodePath("../..")
