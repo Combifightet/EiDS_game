@@ -8,7 +8,7 @@ render_priority = 1
 shader = ExtResource("2_wwfdo")
 shader_parameter/color = Color(1, 0.55, 0.57, 0.9)
 shader_parameter/angle = 0.698132
-shader_parameter/id = -1
+shader_parameter/id = Vector3(0, 0, 0)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_wwfdo"]
 material = SubResource("ShaderMaterial_l5hif")

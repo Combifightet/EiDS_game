@@ -29,10 +29,10 @@ mesh = SubResource("CapsuleMesh_qhqgy")
 [node name="VisionCone" parent="." instance=ExtResource("2_g2els")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="VisionCone2" parent="." instance=ExtResource("2_g2els")]
-transform = Transform3D(0.41951546, 0, -0.90774816, 0, 1, 0, 0.90774816, 0, 0.41951546, -2.1646566, 0.1, -0.5268843)
-view_distance = 7.6
-angle = 0.5061454830783556
+[node name="VisionCone" parent="VisionCone" instance=ExtResource("2_g2els")]
+transform = Transform3D(0.26594314, 0, -0.9639887, 0, 1, 0, 0.9639887, 0, 0.26594314, -2.6095815, 0.05, -1.4925246)
+view_distance = 6.78
+angle = 0.17453292519943295
 id = 1
 
 [node name="Camera3D" type="Camera3D" parent="."]

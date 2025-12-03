@@ -14,11 +14,14 @@ class_name VisionCone
 		angle = value
 		_update_visuals()
 ## Must be a unique value, for vision cones to work while overlapping each other
-@export_range(0, 1, 1, "or_greater", "hide_slider") var id: int = 0:
+## - in the range of [0, 255]
+@export_range(0x00, 0xff, 1, "hide_slider") var id: int = 0:
 	set(value):
-		id = max(0, value)
+		id = (value)#+0x000000ff
+		_id = Color(id/255.0, id/255.0, id/255.0, 1.0)
+		print(_id)
 		_update_visuals()
-
+var _id: Color
 
 @onready var cone: SpotLight3D = $Cone
 @onready var plane: MeshInstance3D = $Cone/Plane
@@ -31,12 +34,15 @@ func _update_visuals() -> void:
 	plane.scale = Vector3.ONE * view_distance
 	plane.get_active_material(0).set_shader_parameter("angle", angle)
 	plane.get_active_material(0).set_shader_parameter("color", color)
-	plane.get_active_material(0).set_shader_parameter("id", id)
+	plane.get_active_material(0).set_shader_parameter("id", _id)
 	cone.spot_angle = rad_to_deg(angle/2)+1
 	cone.spot_range = view_distance+1
-	cone.light_energy = id
+	cone.light_color = _id
 
 
 func _ready() -> void:
-	cone.light_color = Color(0xffffff)
+	# duplicate material, so instances don't share their id's
+	plane.material_override = plane.get_active_material(0).duplicate()
+
+	cone.light_energy = 1
 	_update_visuals()
