@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://p4hc13wmrmsk"]
 
-[ext_resource type="Script" path="res://scripts/guard.gd" id="1_m4fl1"]
+[ext_resource type="Script" uid="uid://c0rswtf0gc4ue" path="res://scripts/guard.gd" id="1_m4fl1"]
 [ext_resource type="Shader" uid="uid://ka8u740ibko6" path="res://shaders/guard.gdshader" id="2_ci2qi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hhgp"]
@@ -23,10 +23,9 @@ shader = ExtResource("2_ci2qi")
 shader_parameter/vision_angle_deg = 60.0
 shader_parameter/color = Color(1, 0, 0, 0.3)
 
-[node name="Node3D" type="CharacterBody3D"]
+[node name="Guard" type="CharacterBody3D"]
 script = ExtResource("1_m4fl1")
 detection_time = 0.5
-eyes_height = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_2hhgp")
@@ -43,7 +42,7 @@ collision_layer = 0
 shape = SubResource("CylinderShape3D_k0dx2")
 
 [node name="VisionCone" type="MeshInstance3D" parent="VisionArea"]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, -0.70284146, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70284146, 0)
 mesh = SubResource("PlaneMesh_ci2qi")
 surface_material_override/0 = SubResource("ShaderMaterial_ygo2t")
 
@@ -51,6 +50,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_ygo2t")
 
 [node name="SpotIndicator" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1818843, 0)
+font_size = 50
 
 [connection signal="body_entered" from="VisionArea" to="." method="_on_vision_area_body_entered"]
 [connection signal="body_exited" from="VisionArea" to="." method="_on_vision_area_body_exited"]

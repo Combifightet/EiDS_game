@@ -21,7 +21,7 @@ func _ready() -> void:
 	ray_cast.add_exception(self)
 	ray_cast.enabled = false # Save performance, only enable when player is close
 	
-	spot_indicator.text = "!!!!"
+	spot_indicator.text = ""
 	
 	if vision_cone_mesh:
 		var mat = vision_cone_mesh.get_surface_override_material(0)
@@ -41,21 +41,25 @@ func check_vision(delta: float) -> void:
 	var can_see = false
 	
 	# 1. Direction Calculation
-	# Get vector from Guard Eyes to Player Center (offsetting y to hit body, not feet)
 	var guard_eyes = global_position + Vector3(0, eyes_height, 0)
 	var player_center = target_player.global_position + Vector3(0, 0.5, 0) 
-	var direction_to_player = guard_eyes.direction_to(player_center)
+	
+	# Calculate direction on the 2D plane (XZ) only to ignore height differences
+	var direction_to_player_2d = (player_center - guard_eyes)
+	direction_to_player_2d.y = 0 # Flatten the vector
+	direction_to_player_2d = direction_to_player_2d.normalized()
+	
+	var forward_vector_2d = -global_transform.basis.z
+	forward_vector_2d.y = 0 # Flatten the forward vector
+	forward_vector_2d = forward_vector_2d.normalized()
+	
+	var angle_to_player = forward_vector_2d.angle_to(direction_to_player_2d)
 	
 	# 2. Angle Check (The "Pie Slice")
-	# global_transform.basis.z is usually "backward" in Godot, so we use -basis.z for forward
-	var forward_vector = -global_transform.basis.z 
-	var angle_to_player = forward_vector.angle_to(direction_to_player)
-	
-	# Convert vision_angle to radians and check half (since angle_to is from center)
 	if angle_to_player < deg_to_rad(vision_angle / 2.0):
 		
 		# 3. RayCast Check (Line of Sight)
-		# Update raycast to point at the player
+		# We still use the full 3D positions for the RayCast to ensure walls block view
 		ray_cast.global_position = guard_eyes
 		ray_cast.target_position = ray_cast.to_local(player_center)
 		ray_cast.force_raycast_update()
