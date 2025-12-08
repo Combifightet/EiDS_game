@@ -25,7 +25,7 @@ func _cell_equals(a: FloorPlanCell, b: FloorPlanCell) -> bool:
 		a.room_id != b.room_id
 	)
 
-func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> void:
+func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> Array[Vector2i]:
 	custom_grid_map.clear()
 		
 	for y in range(floor_plan_grid.height):
@@ -101,10 +101,12 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 	_place_collectibles(floor_plan_grid, doors)
 	
 	_extend_top()
+	
+	return _place_collectibles(floor_plan_grid, doors)
 
 
 
-func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> void:
+func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> Array[Vector2i]:
 	var rooms: Dictionary[int, Vector2i] = {}
 	for room_pos in floor_plan_grid._room_dict.keys():
 		rooms[floor_plan_grid._room_dict[room_pos].id] = room_pos
@@ -168,12 +170,15 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 		add_child(collectible)
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
+	
+	return collectible_pos
 
 
-func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D) -> void:
+func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D, 
+						nav_data: Dictionary, grid_origin: Vector3, 
+						grid_res: float, patrol_path: Array[Vector2i]) -> void:
 	# Get all available rooms from the grid data
 	var room_positions = floor_plan_grid._room_dict.keys()
-	
 	if room_positions.is_empty():
 		return
 
@@ -197,6 +202,9 @@ func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D) -
 	
 	# 3. Assign the player reference required by guard.gd 
 	guard_instance.target_player = target_player
+	
+	guard_instance.setup_navigation(grid_origin, grid_res, nav_data)
+	guard_instance.set_patrol_path(patrol_path)
 
 
 func _extend_top() -> void:
