@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c8r4kfj1lcsea"]
+[gd_scene load_steps=55 format=3 uid="uid://c8r4kfj1lcsea"]
 
 [ext_resource type="Script" uid="uid://dm8bpjnp7uu0a" path="res://scripts/game.gd" id="1_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://3ifg7pybi4rq" path="res://scenes/player.tscn" id="2_gee14"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="7_kvuet"]
 [ext_resource type="Shader" uid="uid://dvvy4jkd0k21h" path="res://shaders/vignette.gdshader" id="8_gee14"]
 [ext_resource type="Texture2D" uid="uid://bkreqj3ce8f4b" path="res://assets/icon_buttons.png" id="9_0tnpc"]
+[ext_resource type="Script" uid="uid://db7b6070djg2j" path="res://scripts/input_button.gd" id="9_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://caj2duyc277he" path="res://assets/icons.png" id="10_vtaks"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6xl0"]
@@ -45,7 +46,7 @@ size = Vector2(3, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0tnpc"]
 shader = ExtResource("8_gee14")
 shader_parameter/color = Color(0.08, 0.09, 0.12, 1)
-shader_parameter/bar_ratio = 0.125
+shader_parameter/bar_ratio = 0.1250000059375
 shader_parameter/vignette_strength = 0.8999999798832
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6xl0"]
@@ -494,6 +495,8 @@ offset_top = 16.0
 offset_right = 52.0
 offset_bottom = 52.0
 flat = true
+script = ExtResource("9_kvpfn")
+input_action = "back"
 
 [node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/CloseButton"]
 position = Vector2(18, 18)
@@ -513,6 +516,8 @@ offset_top = 488.0
 offset_right = 422.0
 offset_bottom = 524.0
 flat = true
+script = ExtResource("9_kvpfn")
+input_action = "rotate_camera_left"
 
 [node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnLeft"]
 position = Vector2(18, 18)
@@ -533,6 +538,8 @@ offset_top = 488.0
 offset_right = 565.0
 offset_bottom = 524.0
 flat = true
+script = ExtResource("9_kvpfn")
+input_action = "rotate_camera_right"
 
 [node name="Background" type="AnimatedSprite2D" parent="GameUi/Vignette/TurnRight"]
 position = Vector2(18, 18)

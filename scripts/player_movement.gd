@@ -1,8 +1,10 @@
 extends CharacterBody3D
-
 class_name PlayerMovement
 
+
 const SAVE_FILE_PATH = "user://character_data.json"
+const DEAD_ZONE_RATIO: float = 0.125
+
 
 @export var collision_shape: CollisionShape3D
 @export var mesh: MeshInstance3D
@@ -134,6 +136,11 @@ func _process(_delta: float):
 		
 		# Get the mouse position and camera
 		var mouse_pos = get_viewport().get_mouse_position()
+		# normalized and centered mouse position -0.5 to 0.5 
+		var normalized_mouse_pos: Vector2 = mouse_pos/get_viewport().get_visible_rect().size - Vector2(0.5, 0.5)
+		if (abs(normalized_mouse_pos.y) - (0.5 - DEAD_ZONE_RATIO)) >= 0:
+			return
+		
 		var camera = get_viewport().get_camera_3d()
 		
 		# Project a ray from the camera
