@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://34txyxthjka1"]
+[gd_scene load_steps=3 format=3 uid="uid://34txyxthjka1"]
 
 [ext_resource type="Script" uid="uid://bj05ljxddehtx" path="res://scripts/main.gd" id="1_l6cm7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
+font_color = Color(1, 1, 1, 0.5)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -30,6 +33,34 @@ layout_mode = 2
 text = "Start Game
 "
 
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="DifficultyLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = " Map Size:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="SelectedDifficultyLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "normal "
+label_settings = SubResource("LabelSettings_l6cm7")
+horizontal_alignment = 2
+
+[node name="DifficultyHSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 2.0
+value = 1.0
+rounded = true
+tick_count = 3
+ticks_on_borders = true
+ticks_position = 3
+
 [node name="Character Editor" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Character Editor"
@@ -39,5 +70,6 @@ layout_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="VBoxContainer/Start Game" to="." method="_on_start_game_pressed"]
+[connection signal="value_changed" from="VBoxContainer/DifficultyHSlider" to="." method="_on_difficulty_h_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/Character Editor" to="." method="_on_character_editor_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit Game" to="." method="_on_quit_game_pressed"]

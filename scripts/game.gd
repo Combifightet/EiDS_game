@@ -3,8 +3,7 @@ extends Control
 var floorplan_gen: FloorPlanGen
 
 @export var player_node: PlayerMovement
-## should be of type `enum FloorPlanGen.HouseSize` 
-@export_enum("small", "normal", "large") var map_size: int = FloorPlanGen.HouseSize.NORMAL
+## should be of type `enum FloorPlanGen.HouseSize`
 
 const GRID_SUBDIVISIONS: int = 1
 
@@ -15,7 +14,7 @@ func _ready() -> void:
 	#floorplan_gen.set_seed(7)
 	randomize()
 	floorplan_gen.set_seed(randi())
-	floorplan_gen.generate(map_size)
+	floorplan_gen.generate(Global.difficulty)
 	print("last_seed: ", floorplan_gen.get_last_seed())
 
 	print("displaying grid ...")
