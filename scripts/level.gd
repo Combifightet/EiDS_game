@@ -104,9 +104,11 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 	
 	_extend_border()
 
+	return _guard_spawn_points(floor_plan_grid)
 
 
-func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> Array[Vector2i]:
+
+func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]):
 	var rooms: Dictionary[int, Vector2i] = {}
 	for room_pos in floor_plan_grid._room_dict.keys():
 		rooms[floor_plan_grid._room_dict[room_pos].id] = room_pos
@@ -170,8 +172,7 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 		add_child(collectible)
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
-	
-	return collectible_pos
+
 
 
 func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D, 
@@ -248,3 +249,7 @@ func _create_border_plane(from: Vector3, to: Vector3) -> void:
 	mesh_instance.position = (from+to)/2
 	
 	add_child(mesh_instance)
+
+
+func _guard_spawn_points(floor_plan_grid: FloorPlanGrid) -> Array[Vector2i]:
+	return floor_plan_grid._room_dict.keys()

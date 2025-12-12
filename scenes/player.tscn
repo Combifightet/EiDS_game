@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://3ifg7pybi4rq"]
+[gd_scene load_steps=4 format=3 uid="uid://3ifg7pybi4rq"]
 
 [ext_resource type="Script" uid="uid://c2r22wr000sgt" path="res://scripts/player_movement.gd" id="1_3vyb7"]
-[ext_resource type="PackedScene" uid="uid://cko2xbxr5j553" path="res://scenes/vision_cone.tscn" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2els"]
 radius = 0.25
@@ -25,15 +24,6 @@ shape = SubResource("CapsuleShape3D_g2els")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
 layers = 2
 mesh = SubResource("CapsuleMesh_qhqgy")
-
-[node name="VisionCone" parent="." instance=ExtResource("2_g2els")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
-
-[node name="VisionCone" parent="VisionCone" instance=ExtResource("2_g2els")]
-transform = Transform3D(0.26594314, 0, -0.9639887, 0, 1, 0, 0.9639887, 0, 0.26594314, -2.6095815, 0.05, -1.4925246)
-view_distance = 6.78
-angle = 0.17453292519943295
-id = 1
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.5026428, -0.4214225, 0.75482005, 0, 0.8731349, 0.48747867, -0.8644942, 0.24502766, -0.43887496, 4.559428, 3.5952144, -4.732627)

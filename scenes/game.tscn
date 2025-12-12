@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://c1mxefw7jy6n8" path="res://scripts/camera.gd" id="4_vtaks"]
 [ext_resource type="Shader" uid="uid://bw4whiuaytnqh" path="res://shaders/edge_detection.gdshader" id="5_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://dj7yevnfwxhg8" path="res://scenes/level.tscn" id="6_dinhu"]
-[ext_resource type="PackedScene" uid="uid://p4hc13wmrmsk" path="res://scenes/guard.tscn" id="7_0tnpc"]
 [ext_resource type="Script" uid="uid://botgtiw1fr6df" path="res://scripts/game_ui.gd" id="7_kvuet"]
 [ext_resource type="Shader" uid="uid://dvvy4jkd0k21h" path="res://shaders/vignette.gdshader" id="8_gee14"]
 [ext_resource type="Texture2D" uid="uid://bkreqj3ce8f4b" path="res://assets/icon_buttons.png" id="9_0tnpc"]
@@ -451,13 +450,11 @@ near = 0.001
 far = 100.0
 
 [node name="PostProcessing" type="MeshInstance3D" parent="PixelViewportContainer/PixelViewport/CameraMount/Camera3D"]
+visible = false
 layers = 32
 mesh = SubResource("QuadMesh_tefeu")
 
 [node name="Level" parent="PixelViewportContainer/PixelViewport" instance=ExtResource("6_dinhu")]
-
-[node name="Node3D" parent="PixelViewportContainer/PixelViewport/Level" instance=ExtResource("7_0tnpc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
 
 [node name="GameUi" type="Control" parent="."]
 layout_mode = 1

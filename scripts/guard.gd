@@ -1,7 +1,11 @@
 extends CharacterBody3D
+class_name Guard
+
+@export_range(0, 255, 1) var id: int = 0 
 
 # --- Configuration ---
-@export var vision_angle: float = 60.0
+@export_range(0, 180, 1, "radians_as_degrees") var vision_angle: float = deg_to_rad(60.0)
+@export var view_dist: float = 4.0
 @export var detection_time: float = 2.0
 @export var eyes_height: float = 0.5
 @export var move_duration: float = 0.4 # How fast the guard moves between tiles
@@ -10,7 +14,8 @@ extends CharacterBody3D
 @onready var vision_area: Area3D = $VisionArea
 @onready var ray_cast: RayCast3D = $RayCast3D
 @onready var spot_indicator: Label3D = $SpotIndicator
-@onready var vision_cone_mesh: MeshInstance3D = $VisionArea/VisionCone
+@onready var vision_cone: VisionCone = $VisionArea/VisionCone
+@onready var view_range: CollisionShape3D = $VisionArea/ViewRange
 
 # --- State ---
 var target_player: PlayerMovement = null
@@ -35,10 +40,24 @@ func _ready() -> void:
 	ray_cast.enabled = false
 	spot_indicator.text = ""
 	
-	if vision_cone_mesh:
-		var mat = vision_cone_mesh.get_surface_override_material(0)
-		if mat is ShaderMaterial:
-			mat.set_shader_parameter("vision_angle_deg", vision_angle)
+	vision_cone.id = id
+	vision_cone.angle = vision_angle
+	vision_cone.view_distance = view_dist
+	view_range.scale = Vector3(view_dist, 1, view_dist)
+
+
+func set_id(new_id: int):
+	id = new_id
+	vision_cone.id = id
+
+func set_vision_angle(new_angle: float):
+	vision_angle = new_angle
+	vision_cone.angle = vision_angle
+
+func set_view_dist(new_dist: float):
+	vision_cone.view_distance = new_dist
+	view_range.scale = Vector3(view_dist, 1, view_dist)
+
 
 func _physics_process(delta: float) -> void:
 	# 1. Vision Logic (Existing)
@@ -71,7 +90,7 @@ func check_vision(delta: float) -> void:
 		
 		var angle_to_player = forward_vector_2d.angle_to(direction_to_player_2d)
 		
-		if angle_to_player < deg_to_rad(vision_angle / 2.0):
+		if angle_to_player < vision_angle/2.0:
 			ray_cast.global_position = guard_eyes
 			ray_cast.target_position = ray_cast.to_local(player_center)
 			ray_cast.force_raycast_update()
@@ -195,17 +214,16 @@ func game_over() -> void:
 	#set_physics_process(false)
 
 func _set_cone_color(col: Color) -> void:
-	if vision_cone_mesh:
-		var mat = vision_cone_mesh.get_surface_override_material(0)
-		if mat:
-			mat.set_shader_parameter("color", col)
+	vision_cone.color = col
 
 func _on_vision_area_body_entered(body: Node3D) -> void:
+	print("on area entered")
 	if body is PlayerMovement:
 		target_player = body
 		is_in_range = true
 
 func _on_vision_area_body_exited(body: Node3D) -> void:
+	print("on area exited")
 	if body == target_player:
 		target_player = null
 		is_in_range = false

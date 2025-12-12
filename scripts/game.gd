@@ -14,7 +14,7 @@ func _ready() -> void:
 	#floorplan_gen.set_seed(7)
 	randomize()
 	floorplan_gen.set_seed(randi())
-	floorplan_gen.generate(FloorPlanGen.HouseSize.NORMAL)
+	floorplan_gen.generate(FloorPlanGen.HouseSize.SMALL)
 	print("last_seed: ", floorplan_gen.get_last_seed())
 
 	print("displaying grid ...")
@@ -67,7 +67,6 @@ func _ready() -> void:
 	
 	var level_gen: LevelGen = %PixelViewport/Level
 	level_gen.position = Vector3(world.grid.origin.x, 0, world.grid.origin.y)
-	level_gen.from_grid(world.grid, world.doors, GRID_SUBDIVISIONS)
 	
 	var patrol_points = level_gen.from_grid(world.grid, world.doors, GRID_SUBDIVISIONS)
 	
