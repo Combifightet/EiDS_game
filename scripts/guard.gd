@@ -6,7 +6,7 @@ class_name Guard
 # --- Configuration ---
 @export_range(0, 180, 1, "radians_as_degrees") var vision_angle: float = deg_to_rad(60.0)
 @export var view_dist: float = 4.0
-@export var detection_time: float = 2.0
+@export var detection_time: float = 0.5 ## time to be caught in seconds
 @export var eyes_height: float = 0.5
 @export var move_duration: float = 0.4 # How fast the guard moves between tiles
 
@@ -44,6 +44,8 @@ func _ready() -> void:
 	vision_cone.angle = vision_angle
 	vision_cone.view_distance = view_dist
 	view_range.scale = Vector3(view_dist, 1, view_dist)
+	
+	check_vision(0)
 
 
 func set_id(new_id: int):
@@ -55,7 +57,8 @@ func set_vision_angle(new_angle: float):
 	vision_cone.angle = vision_angle
 
 func set_view_dist(new_dist: float):
-	vision_cone.view_distance = new_dist
+	view_dist = new_dist
+	vision_cone.view_distance = view_dist
 	view_range.scale = Vector3(view_dist, 1, view_dist)
 
 
@@ -78,7 +81,7 @@ func check_vision(delta: float) -> void:
 	if is_in_range:
 		var can_see = false
 		var guard_eyes = global_position + Vector3(0, eyes_height, 0)
-		var player_center = target_player.global_position + Vector3(0, 0.5, 0) 
+		var player_center = target_player.global_position + Vector3(0, eyes_height, 0) 
 		
 		var direction_to_player_2d = (player_center - guard_eyes)
 		direction_to_player_2d.y = 0 
@@ -89,7 +92,6 @@ func check_vision(delta: float) -> void:
 		forward_vector_2d = forward_vector_2d.normalized()
 		
 		var angle_to_player = forward_vector_2d.angle_to(direction_to_player_2d)
-		
 		if angle_to_player < vision_angle/2.0:
 			ray_cast.global_position = guard_eyes
 			ray_cast.target_position = ray_cast.to_local(player_center)
@@ -211,6 +213,7 @@ func update_indicator() -> void:
 func game_over() -> void:
 	print("GAME OVER")
 	spot_indicator.text = "CAUGHT!"
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 	#set_physics_process(false)
 
 func _set_cone_color(col: Color) -> void:

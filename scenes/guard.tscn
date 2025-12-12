@@ -11,14 +11,13 @@
 albedo_color = Color(0.11263574, 0.25456724, 0.7680694, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_k0dx2"]
-height = 1.5
+height = 1.9
 radius = 1.0
 
 [node name="Guard" type="CharacterBody3D"]
-collision_layer = 11
-collision_mask = 2
+collision_layer = 8
+collision_mask = 3
 script = ExtResource("1_m4fl1")
-detection_time = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_2hhgp")
@@ -33,12 +32,15 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="ViewRange" type="CollisionShape3D" parent="VisionArea"]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("CylinderShape3D_k0dx2")
 
 [node name="VisionCone" parent="VisionArea" instance=ExtResource("2_ci2qi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.95, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
+collision_mask = 3
+hit_back_faces = false
 
 [node name="SpotIndicator" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1818843, 0)
