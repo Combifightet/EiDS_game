@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://p4hc13wmrmsk"]
+
+[ext_resource type="Script" uid="uid://c0rswtf0gc4ue" path="res://scripts/guard.gd" id="1_m4fl1"]
+[ext_resource type="Shader" uid="uid://ka8u740ibko6" path="res://shaders/guard.gdshader" id="2_ci2qi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hhgp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m4fl1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci2qi"]
+albedo_color = Color(0.11263574, 0.25456724, 0.7680694, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_k0dx2"]
+height = 1.5
+radius = 4.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ci2qi"]
+size = Vector2(8, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ygo2t"]
+render_priority = 1
+shader = ExtResource("2_ci2qi")
+shader_parameter/vision_angle_deg = 60.0
+shader_parameter/color = Color(1, 0, 0, 0.3)
+
+[node name="Guard" type="CharacterBody3D"]
+script = ExtResource("1_m4fl1")
+detection_time = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_2hhgp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_m4fl1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ci2qi")
+
+[node name="VisionArea" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="ViewRange" type="CollisionShape3D" parent="VisionArea"]
+shape = SubResource("CylinderShape3D_k0dx2")
+
+[node name="VisionCone" type="MeshInstance3D" parent="VisionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70284146, 0)
+mesh = SubResource("PlaneMesh_ci2qi")
+surface_material_override/0 = SubResource("ShaderMaterial_ygo2t")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+
+[node name="SpotIndicator" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1818843, 0)
+font_size = 50
+
+[connection signal="body_entered" from="VisionArea" to="." method="_on_vision_area_body_entered"]
+[connection signal="body_exited" from="VisionArea" to="." method="_on_vision_area_body_exited"]

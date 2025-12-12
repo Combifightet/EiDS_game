@@ -132,6 +132,7 @@ func setup_pathfinding_graph(grid_data: Dictionary) -> void:
 
 func _process(_delta: float):
 	
+	
 	if Input.is_action_just_pressed("LeftClick"):
 		
 		# Get the mouse position and camera

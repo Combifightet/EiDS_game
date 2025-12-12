@@ -7,6 +7,7 @@ class_name LevelGen
 @onready var custom_grid_map: CustomGridMap = $CustomGridMap
 
 var _collectible: PackedScene = preload('res://scenes/collectible.tscn')
+var _guard_scene: PackedScene = preload("res://scenes/guard.tscn")
 
 var _top_material: ShaderMaterial = preload("res://materials/top_material.tres")
 
@@ -26,7 +27,7 @@ func _cell_equals(a: FloorPlanCell, b: FloorPlanCell) -> bool:
 		a.room_id != b.room_id
 	)
 
-func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> void:
+func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> Array[Vector2i]:
 	custom_grid_map.clear()
 		
 	for y in range(floor_plan_grid.height):
@@ -105,7 +106,7 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 
 
 
-func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> void:
+func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door]) -> Array[Vector2i]:
 	var rooms: Dictionary[int, Vector2i] = {}
 	for room_pos in floor_plan_grid._room_dict.keys():
 		rooms[floor_plan_grid._room_dict[room_pos].id] = room_pos
@@ -169,7 +170,41 @@ func _place_collectibles(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanG
 		add_child(collectible)
 		var pos: Vector2i = collectible_pos[i]
 		collectible.position = Vector3(pos.x, 0, pos.y)
+	
+	return collectible_pos
 
+
+func place_single_guard(floor_plan_grid: FloorPlanGrid, target_player: Node3D, 
+						nav_data: Dictionary, grid_origin: Vector3, 
+						grid_res: float, patrol_path: Array[Vector2i]) -> void:
+	# Get all available rooms from the grid data
+	var room_positions = floor_plan_grid._room_dict.keys()
+	if room_positions.is_empty():
+		return
+
+	# Pick a random room. 
+	var random_room_pos = room_positions.pick_random()
+	var room_id = floor_plan_grid._room_dict[random_room_pos].id
+	
+	# Get the center coordinate of that room
+	var grid_pos: Vector2i = floor_plan_grid.get_room_center(room_id)
+	
+	# Instantiate the guard
+	var guard_instance = _guard_scene.instantiate()
+	add_child(guard_instance)
+	
+	# Position the guard
+	guard_instance.global_position = Vector3(grid_pos.x, 1.0, grid_pos.y)
+	
+	# Rotate guard randomly (0, 90, 180, or 270 degrees)
+	var random_rot = (randi() % 4) * 90.0
+	guard_instance.rotation_degrees.y = random_rot
+	
+	# 3. Assign the player reference required by guard.gd 
+	guard_instance.target_player = target_player
+	
+	guard_instance.setup_navigation(grid_origin, grid_res, nav_data)
+	guard_instance.set_patrol_path(patrol_path)
 
 
 func _extend_border() -> void:
