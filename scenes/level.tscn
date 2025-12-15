@@ -5,6 +5,8 @@
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_w7c3h")
+wall_height = null
+grid_size = null
 
 [node name="CustomGridMap" parent="." instance=ExtResource("1_2q6dc")]
 collision_layer = 2

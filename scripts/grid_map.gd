@@ -1,6 +1,22 @@
 extends GridMap
 class_name CustomGridMap
 
+## should be of type [Biome] (enum)
+@export var room_ids: ImageTexture:
+	set(value):
+		room_ids = value
+		_update_materials()
+		
+@export var grid_scale: float = 1.0:
+	set(value):
+		grid_scale = value
+		_update_materials()
+		
+@export var grid_offset: Vector2 = Vector2(0, 0):
+	set(value):
+		grid_offset = value
+		_update_materials()
+
 # 240 = 16 + 
 # 0b001_111_000
 
@@ -62,5 +78,16 @@ class_name CustomGridMap
 	0b110_110_000: mesh_library.find_item_by_name("Tile 4-12"),
 }
 
-func _ready() -> void:
-	mesh_library.find_item_by_name("")
+
+func _update_materials() -> void:
+	print("grid_scale:  ", grid_scale)
+	print("grid_offset: ", grid_offset)
+	for item_id: int in mesh_library.get_item_list():
+		var item_mesh: Mesh = mesh_library.get_item_mesh(item_id)
+		
+		for i: int in range(item_mesh.get_surface_count()):
+			var material = item_mesh.surface_get_material(i)
+			material.set_shader_parameter("world_offset", -Vector2(global_position.x, global_position.z))
+			material.set_shader_parameter("room_ids", room_ids)
+			material.set_shader_parameter("grid_size", grid_scale)
+			material.set_shader_parameter("grid_offset", grid_offset)

@@ -29,12 +29,14 @@ func _cell_equals(a: FloorPlanCell, b: FloorPlanCell) -> bool:
 
 func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] = [], subdivisions: int = 0) -> Array[Vector2i]:
 	custom_grid_map.clear()
+	custom_grid_map.room_ids = floor_plan_grid.to_sampler()
+	custom_grid_map.grid_scale = 1/grid_size
 		
 	for y in range(floor_plan_grid.height):
 		for x in range(floor_plan_grid.width):
 			# TODO: calculate peering bits, by checking cell id's
 			#       also check for doors
-			var cell = floor_plan_grid.get_cell(x, y)
+			var cell: FloorPlanCell = floor_plan_grid.get_cell(x, y)
 			var neighbours: Array[bool] = [
 				false, false, false,
 				false, false, false,
@@ -89,16 +91,16 @@ func from_grid(floor_plan_grid: FloorPlanGrid, doors: Array[FloorPlanGen.Door] =
 			
 			@warning_ignore("integer_division")
 			custom_grid_map.set_cell_item(
-				# TODO: this offset is not correct
-				#Vector3i(x-floor_plan_grid.width/2, 0, y-floor_plan_grid.height/2),
 				Vector3i(x, 0, y),
-				custom_grid_map.tiles[peering_bits]
+				custom_grid_map.tiles[peering_bits],
 			)
 
-			var subd_scale: float = pow(2, max(0, subdivisions))
 
-			custom_grid_map.scale = Vector3(1/grid_size, wall_height, 1/grid_size)
-			custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)
+	var subd_scale: float = pow(2, max(0, subdivisions))
+
+	custom_grid_map.scale = Vector3(1/grid_size, wall_height, 1/grid_size)
+	custom_grid_map.scale *= Vector3(subd_scale, 1, subd_scale)
+	custom_grid_map.grid_scale = 1/grid_size*subd_scale
 	
 	_place_collectibles(floor_plan_grid, doors)
 	

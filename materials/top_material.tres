@@ -1,7 +1,11 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ckevook7srwij"]
 
-[ext_resource type="Shader" path="res://materials/shaders/top.tres" id="1_r85sp"]
+[ext_resource type="Shader" uid="uid://cdqojsemw7qmx" path="res://materials/shaders/terrain.gdshader" id="1_r85sp"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_r85sp")
+shader_parameter/grid_size = 1.0
+shader_parameter/grid_offset = Vector2i(0, 0)
+shader_parameter/inside = Color(0.3, 0.6, 0.4, 1)
+shader_parameter/outside = Color(0.7, 0.2, 0.6, 1)

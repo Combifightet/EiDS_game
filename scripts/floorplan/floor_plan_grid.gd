@@ -14,8 +14,8 @@ var _room_bounds: Dictionary[int, Rect2i] = {} ## Stores the current rectangular
 
 
 func _init(w: int, h: int, resolution: int = 1) -> void:
-	print("    width:  ", w)
-	print("    height: ", h)
+	print("	width:  ", w)
+	print("	height: ", h)
 	width = w
 	height = h
 	grid_resolution = resolution
@@ -349,14 +349,14 @@ func grow_rooms() -> void:
 			var room_bounds: Rect2i = _room_bounds[room.id]
 			
 			# check all directions			
-			var start_points: Array[Vector2i] = [ #                reverse of check_direction
-				Vector2i(room_bounds.position.x, room_bounds.position.y) + Vector2i.UP,    # top (left)
-				Vector2i(room_bounds.end.x-1,    room_bounds.position.y) + Vector2i.UP,    # top (right)
-				Vector2i(room_bounds.end.x-1,    room_bounds.position.y) + Vector2i.RIGHT, # right (top)
-				Vector2i(room_bounds.end.x-1,    room_bounds.end.y-1)    + Vector2i.RIGHT, # right (bottom)
-				Vector2i(room_bounds.end.x-1,    room_bounds.end.y-1)    + Vector2i.DOWN,  # bottom (right)
-				Vector2i(room_bounds.position.x, room_bounds.end.y-1)    + Vector2i.DOWN,  # bottom (left)
-				Vector2i(room_bounds.position.x, room_bounds.end.y-1)    + Vector2i.LEFT,  # left (bottom)
+			var start_points: Array[Vector2i] = [ #				reverse of check_direction
+				Vector2i(room_bounds.position.x, room_bounds.position.y) + Vector2i.UP,	# top (left)
+				Vector2i(room_bounds.end.x-1,	room_bounds.position.y) + Vector2i.UP,	# top (right)
+				Vector2i(room_bounds.end.x-1,	room_bounds.position.y) + Vector2i.RIGHT, # right (top)
+				Vector2i(room_bounds.end.x-1,	room_bounds.end.y-1)	+ Vector2i.RIGHT, # right (bottom)
+				Vector2i(room_bounds.end.x-1,	room_bounds.end.y-1)	+ Vector2i.DOWN,  # bottom (right)
+				Vector2i(room_bounds.position.x, room_bounds.end.y-1)	+ Vector2i.DOWN,  # bottom (left)
+				Vector2i(room_bounds.position.x, room_bounds.end.y-1)	+ Vector2i.LEFT,  # left (bottom)
 				Vector2i(room_bounds.position.x, room_bounds.position.y) + Vector2i.LEFT,  # left (top)
 			]
 			var growth_width: int = 0
@@ -688,9 +688,9 @@ func get_subdivided_grid() -> FloorPlanGrid:
 	for y in range(height):
 		for x in range(width):
 			var old_cell: FloorPlanCell = get_cell(x, y)
-			new_grid.set_cell(x*2,     y*2,     old_cell) # top-left
-			new_grid.set_cell(x*2 + 1, y*2,     old_cell) # top-right
-			new_grid.set_cell(x*2,     y*2 + 1, old_cell) # bottom-left
+			new_grid.set_cell(x*2,	 y*2,	 old_cell) # top-left
+			new_grid.set_cell(x*2 + 1, y*2,	 old_cell) # top-right
+			new_grid.set_cell(x*2,	 y*2 + 1, old_cell) # bottom-left
 			new_grid.set_cell(x*2 + 1, y*2 + 1, old_cell) # bottom-right
 	
 	return new_grid
@@ -710,6 +710,20 @@ func to_texture() -> Image:
 				var hue: float = rooms.find(cell.room_id)/float(rooms.size())
 				image.set_pixel(x, y, Color.from_ok_hsl(hue, 66/100.0, 55/100.0))
 	return image
+
+## creates a n image, where the `R-channel` holds the id, `G` is 0 if the cell not a room and `B` is 0 if the cell is outside
+func to_sampler() -> ImageTexture:
+	var image: Image = Image.create(width, height, false, Image.FORMAT_RGB8)
+	for y in range(height):
+		for x in range(width):
+			var cell: FloorPlanCell = get_cell(x, y)
+			var color: Color = Color.from_rgba8(
+				cell.room_id,
+				0 if cell.is_empty() || cell.is_outside() else 255,
+				0 if cell.is_outside() else 255
+			)
+			image.set_pixel(x, y, color)
+	return ImageTexture.create_from_image(image)
 
 
 ## Debug: Print grid
