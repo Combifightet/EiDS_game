@@ -4,6 +4,7 @@ render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse
 varying vec2 world_pos;
 
 uniform vec2 world_offset = vec2(0);
+uniform bool debug = false;
 
 group_uniforms GridData;
 uniform isampler2D room_ids : repeat_disable, filter_nearest;
@@ -48,9 +49,12 @@ void fragment() {
 	cell_has_neighbour = clamp(cell_has_neighbour, 0.0, 1.0);
 
 
-	float checker = float((grid_position.x+grid_position.y)%2);
 
 	//ALBEDO = inside*cell_has_room + outside*(1.0-cell_has_room);
 	ALBEDO = inside*cell_has_room + (border*cell_has_neighbour+outside*(1.0-cell_has_neighbour))*(1.0-cell_has_room);
-	ALBEDO *= checker*0.2+0.8;
+
+	if (debug) {
+		float checker = float((grid_position.x+grid_position.y)%2);
+		ALBEDO *= checker*0.2+0.8;
+	}
 }

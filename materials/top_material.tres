@@ -5,7 +5,10 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_r85sp")
+shader_parameter/world_offset = Vector2(0, 0)
+shader_parameter/debug = false
 shader_parameter/grid_size = 1.0
-shader_parameter/grid_offset = Vector2i(0, 0)
-shader_parameter/inside = Color(0.3, 0.6, 0.4, 1)
-shader_parameter/outside = Color(0.7, 0.2, 0.6, 1)
+shader_parameter/grid_offset = Vector2i(0, 1)
+shader_parameter/inside = Color(0.4, 0.356, 0.26799998, 1)
+shader_parameter/border = Color(0.4, 0.35686275, 0.26666668, 1)
+shader_parameter/outside = Color(0.05490196, 0.07058824, 0.08627451, 1)

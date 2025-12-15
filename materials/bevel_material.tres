@@ -1,7 +1,14 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://crau834xbwhxx"]
 
-[ext_resource type="Shader" uid="uid://cj6guew5asel6" path="res://materials/shaders/bevel.tres" id="1_m6u6f"]
+[ext_resource type="Shader" uid="uid://cdqojsemw7qmx" path="res://materials/shaders/terrain.gdshader" id="1_m6u6f"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_m6u6f")
+shader_parameter/world_offset = Vector2(0, 0)
+shader_parameter/debug = false
+shader_parameter/grid_size = 1.0
+shader_parameter/grid_offset = Vector2i(0, 1)
+shader_parameter/inside = Color(0.49, 0.43569165, 0.31849998, 1)
+shader_parameter/border = Color(0.33, 0.31185, 0.2937, 1)
+shader_parameter/outside = Color(0.33003333, 0.28918967, 0.29337206, 1)

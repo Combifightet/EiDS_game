@@ -6,8 +6,9 @@
 render_priority = 0
 shader = ExtResource("1_pj78u")
 shader_parameter/world_offset = Vector2(0, 0)
+shader_parameter/debug = false
 shader_parameter/grid_size = 1.0
-shader_parameter/grid_offset = Vector2i(0, 0)
-shader_parameter/inside = Color(0.3, 0.6, 0.4, 1)
-shader_parameter/border = Color(0.5, 0.4, 0.3, 1)
-shader_parameter/outside = Color(0.7, 0.2, 0.6, 1)
+shader_parameter/grid_offset = Vector2i(0, 1)
+shader_parameter/inside = Color(0.7607843, 0.6666667, 0.5411765, 1)
+shader_parameter/border = Color(0.4627451, 0.40392157, 0.4117647, 1)
+shader_parameter/outside = Color(0.46254948, 0.40443814, 0.4100209, 1)

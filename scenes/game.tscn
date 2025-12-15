@@ -35,8 +35,8 @@ material = SubResource("ShaderMaterial_tbgi4")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 render_priority = 0
 shader = ExtResource("5_kvpfn")
-shader_parameter/lineHighlight = 0.2
-shader_parameter/lineShadow = 0.55
+shader_parameter/lineHighlight = 0.02999999932944
+shader_parameter/lineShadow = 0.5999999865888
 
 [sub_resource type="QuadMesh" id="QuadMesh_tefeu"]
 material = SubResource("ShaderMaterial_tipki")

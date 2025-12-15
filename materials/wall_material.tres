@@ -1,7 +1,14 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ypqxf5j3y1ln"]
 
-[ext_resource type="Shader" path="res://materials/shaders/wall.tres" id="1_kf2sy"]
+[ext_resource type="Shader" uid="uid://cdqojsemw7qmx" path="res://materials/shaders/terrain.gdshader" id="1_kf2sy"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_kf2sy")
+shader_parameter/world_offset = Vector2(0, 0)
+shader_parameter/debug = false
+shader_parameter/grid_size = 1.0
+shader_parameter/grid_offset = Vector2i(0, 1)
+shader_parameter/inside = Color(0.71, 0.6058667, 0.426, 1)
+shader_parameter/border = Color(0.71, 0.64254993, 0.5751, 1)
+shader_parameter/outside = Color(0.29337206, 0.25030932, 0.2716998, 1)
