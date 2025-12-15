@@ -19,6 +19,13 @@ func _ready() -> void:
 	
 	_load_data()
 	
+	 # Initialize the preview material and assign it to the mesh
+	if character_preview_mesh:
+		_preview_material = StandardMaterial3D.new()
+		character_preview_mesh.material_override = _preview_material
+		_preview_material.albedo_color = color_picker_button.color
+
+	
 func _on_color_picker_button_color_changed(new_color: Color) -> void:
 
 	if _preview_material:
